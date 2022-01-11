@@ -7,7 +7,9 @@ Just run below command to compile and build orchestrator and MMA project
     ./runOrchestrator.sh
   
  Change directory to
-    cd mule-migration-assistant-chore-mig-cost/mule-migrator-orchestrator/target
+ 
+        cd mule-migration-assistant-chore-mig-cost/mule-migrator-orchestrator/target
+    
  Unzip mule-migrator-orchestrator-0.0.1-SNAPSHOT.zip
  
  Change directory mule-migrator-orchestrator-0.0.1-SNAPSHOT 
