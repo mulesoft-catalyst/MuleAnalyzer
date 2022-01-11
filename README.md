@@ -26,6 +26,23 @@ Run  mule mirator orchestrator
   
   
 ## Key Properties
+  Mule 3 Properties
+    componentsWeighFactor
+    dwlLinesOfCodeWeighFactor
+    munitsWeighFactor
+  
+  Mule 4 Properties
+    mule4MELExpressionWeigh
+    mule4MELLineExpressionWeigh
+    mule4NumberOfDWLTransformationLines
+    mule4ComponentsWeigh
+  
+    Error and WARN weigh as per components sample
+      api-platform-gw.ERROR
+      api-platform-gw.WARN
+      apikit-soap.ERROR
+      apikit-soap.WARN
+    
   
   
   
