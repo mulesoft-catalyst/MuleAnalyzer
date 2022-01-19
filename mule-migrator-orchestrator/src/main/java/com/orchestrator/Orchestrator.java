@@ -48,7 +48,7 @@ public class Orchestrator {
 
 	public static void main(String[] args) {
 		
-		
+		PropsUtil.loadProperties("config/config.properties");
 		
 		
 		
@@ -62,11 +62,13 @@ public class Orchestrator {
 		
 		
 		if(args.length > 0 && args.length == 4) {
-			PROJECTS_BASE_PATH = (args[1] != null) ? args[1]: PROJECTS_BASE_PATH;
-			DESTINATION_PROJECTS_BASE_PATH = (args[3] != null) ? args[3]: PROJECTS_BASE_PATH;
+			PROJECTS_BASE_PATH = args[1];
+			DESTINATION_PROJECTS_BASE_PATH = args[3];
+			System.out.println("args -1"+ args[1]);
 		}else {
 			System.out.println("Arguments not provided hence started with default one");
 			System.out.println("Provide command line arguments in format : -projectBasePath <mule 3base path> -destinationProjectBasePath <mule 4 projects>");
+			return;
 		}
 		
 		
@@ -141,8 +143,13 @@ public class Orchestrator {
 		 */
 		
 		MMAReport mr = new MMAReport();
-		
-		mr.parseMMAReport(DESTINATION_PROJECT_BASE_PATH + DESTINATION_REPORT_REL_PATH, metaDataBean);
+		try {
+			mr.parseMMAReport(DESTINATION_PROJECT_BASE_PATH + DESTINATION_REPORT_REL_PATH, metaDataBean);
+		}catch(Exception e) {
+			if("Report not generated".equalsIgnoreCase(e.getMessage())) {
+				throw e;
+			}
+		}
 		
 		PrepareProjectList.analyzeProject(PROJECT_BASE_PATH, metaDataBean);
 		

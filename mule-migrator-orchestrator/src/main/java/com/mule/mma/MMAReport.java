@@ -22,27 +22,23 @@ import java.util.stream.StreamSupport;
 import com.mule.application.ApplicationMetrics;
 import com.mulesoft.migration.beans.MessageInfo;
 import com.mulesoft.migration.beans.ProjectMetaDataBean;
+import com.orchestrator.PropsUtil;
 
 public class MMAReport {
 
-	private static Properties prop = new Properties();
+	private static Properties prop = PropsUtil.getProps();
 
 	public void parseMMAReport(String reportPath, ProjectMetaDataBean metaData) {
 
 		try {
 			Path fileName = Path.of(reportPath);
 			
-			
-
-			try (InputStream input = new FileInputStream("src/main/resources/config/config.properties")) {
-
-				// load a properties file
-				prop.load(input);
-				// get the property value and print it out
-
-			} catch (IOException ex) {
-				ex.printStackTrace();
+			if(!fileName.toFile().isFile()) {
+				throw new Exception("Report not generated");
 			}
+			
+			
+			
 			ApplicationMetrics am = metaData.getMule4Metrics();
 			String jsonReport = Files.readString(fileName);
 			JsonElement element = JsonParser.parseString(jsonReport);

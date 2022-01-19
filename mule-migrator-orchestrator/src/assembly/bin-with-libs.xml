@@ -7,6 +7,15 @@
         <format>zip</format>
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+            <fileSet>
+                <directory>src/main/resources/config</directory>
+                <outputDirectory>/config</outputDirectory>
+                <includes>
+                    <include>*.properties</include>
+                </includes>
+            </fileSet>
+    </fileSets> 
     <dependencySets>
         <dependencySet>
             <outputDirectory>/</outputDirectory>

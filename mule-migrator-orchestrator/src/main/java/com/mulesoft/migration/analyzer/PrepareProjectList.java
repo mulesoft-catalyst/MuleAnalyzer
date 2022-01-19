@@ -29,6 +29,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mulesoft.migration.beans.FileMetaDataBean;
 import com.mulesoft.migration.beans.ProjectMetaDataBean;
+import com.orchestrator.PropsUtil;
 
 public class PrepareProjectList {
 
@@ -36,7 +37,7 @@ public class PrepareProjectList {
 
 	public static String projectName = "/Users/dsuneja/mule3/jobapplicationapi";
 
-	public static Properties prop = new Properties();
+	public static Properties prop = PropsUtil.getProps();
 
 	public static void main(String[] args) {
 		File currentDir = new File(parentMule3ProjectPath);
@@ -44,17 +45,6 @@ public class PrepareProjectList {
 //	      Map<String, String> projectMap =  displayDirectoryContents(currentDir);
 
 //	      System.out.println("# of Projects::" +  projectMap.size());
-
-		try (InputStream input = new FileInputStream(
-				"src/main/resources/config/config.properties")) {
-
-			// load a properties file
-			prop.load(input);
-			// get the property value and print it out
-
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
 
 		System.out.println("parentMule3ProjectPath dir---" + projectName);
 		File dir = new File(projectName);
@@ -82,17 +72,6 @@ public class PrepareProjectList {
 
 //	      System.out.println("# of Projects::" +  projectMap.size());
 		
-
-		try (InputStream input = new FileInputStream(
-				"src/main/resources/config/config.properties")) {
-
-			// load a properties file
-			prop.load(input);
-			// get the property value and print it out
-
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
 
 		System.out.println("parentMule3ProjectPath dir---" + projectName);
 		File dir = new File(projectName);
