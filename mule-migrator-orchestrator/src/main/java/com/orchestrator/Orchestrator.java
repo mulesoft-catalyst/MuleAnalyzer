@@ -32,8 +32,8 @@ public class Orchestrator {
 	
 	private static String DESTINATION_REPORT_REL_PATH = "/report/report.json";
 	
-	private static String PROJECTS_BASE_PATH = "/Users/dsuneja/mule3/mule3Projects";
-	private static String DESTINATION_PROJECTS_BASE_PATH = "/Users/dsuneja/mule3/mule4Projects";
+	private static String PROJECTS_BASE_PATH = "";
+	private static String DESTINATION_PROJECTS_BASE_PATH = "";
 	
 	private static FileFilter directoryFileFilter = new FileFilter() {
 	      //Override accept method
@@ -50,7 +50,15 @@ public class Orchestrator {
 		
 		PropsUtil.loadProperties("config/config.properties");
 		
-		
+		if(args.length > 0 && args.length == 4) {
+			PROJECTS_BASE_PATH = args[1];
+			DESTINATION_PROJECTS_BASE_PATH = args[3];
+			System.out.println("args -1"+ args[1]);
+		}else {
+			System.out.println("Arguments not provided hence started with default one");
+			System.out.println("Provide command line arguments in format : -projectBasePath <mule 3base path> -destinationProjectBasePath <mule 4 projects>");
+			return;
+		}
 		
 		
 		File file = new File(PROJECTS_BASE_PATH);
@@ -61,15 +69,7 @@ public class Orchestrator {
 		File[] files = file.listFiles(directoryFileFilter);
 		
 		
-		if(args.length > 0 && args.length == 4) {
-			PROJECTS_BASE_PATH = args[1];
-			DESTINATION_PROJECTS_BASE_PATH = args[3];
-			System.out.println("args -1"+ args[1]);
-		}else {
-			System.out.println("Arguments not provided hence started with default one");
-			System.out.println("Provide command line arguments in format : -projectBasePath <mule 3base path> -destinationProjectBasePath <mule 4 projects>");
-			return;
-		}
+		
 		
 		
 		for(File dir : files) {
