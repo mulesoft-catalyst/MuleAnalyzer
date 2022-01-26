@@ -123,12 +123,12 @@ public class MMAReport {
 
 	private String findByProperty(List<MessageInfo> infos, String key) {
 		MessageInfo obj = infos.stream().filter(info -> key.equalsIgnoreCase(info.getId())).findFirst().orElse(null);
-		if(obj!=null) {
-			if(obj.getKey().equalsIgnoreCase("components.unsupported")) {
-				System.out.println("Unsupported missing key is" + key );
-				return "mule4.unsupportedComponentNotFoundWeight";
-			}
+		
+		if(null != obj && null != obj.getKey() && obj.getKey().equalsIgnoreCase("components.unsupported")) {
+			System.out.println("Unsupported missing key is" + key );
+			return "mule4.unsupportedComponentNotFoundWeight";
 		}
+			
 		System.out.println("Supported missing key is" + key );
 		return "mule4.supportComponentNotFoundWeight";
 	}
