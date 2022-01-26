@@ -107,9 +107,9 @@ public class PrepareProjectList {
 		long numberOfMunits = projectMetaDataBean.getFileMetaDataMap().values().stream()
 				.filter(o -> o.getFileType().equalsIgnoreCase("test-suite")).mapToLong(o -> o.getNumberOfTests()).sum();
 
-		double score = totalNoOfComponents * Double.parseDouble(prop.getProperty("componentsWeighFactor"))
-				+ totalLinesOfDWLCode * Double.parseDouble(prop.getProperty("dwlLinesOfCodeWeighFactor"))
-				+ numberOfMunits * Double.parseDouble(prop.getProperty("munitsWeighFactor"));
+		double score = totalNoOfComponents * Double.parseDouble(prop.getProperty("mule3.componentsWeightFactor"))
+				+ totalLinesOfDWLCode * Double.parseDouble(prop.getProperty("mule3.dwlLinesOfCodeWeightFactor"))
+				+ numberOfMunits * Double.parseDouble(prop.getProperty("mule3.munitsWeightFactor"));
 
 		System.out.println("count of components" + totalNoOfComponents);
 		System.out.println("count of dwl lines of code " + totalLinesOfDWLCode);

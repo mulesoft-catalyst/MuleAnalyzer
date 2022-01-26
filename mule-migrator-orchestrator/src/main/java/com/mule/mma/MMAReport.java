@@ -73,32 +73,45 @@ public class MMAReport {
 				Map<String, Integer> accumulator = new HashMap<String, Integer>();
 				infos.forEach(t -> accumulator.merge(t.getId(), 1, Math::addExact));
 
-				System.out.println(accumulator);
+				double tempScore = 0.0;
 
 				for (String key : accumulator.keySet()) {
-
+					
+					
+					if(prop.getProperty(key) == null) {
+						
+						String tempKey = findByProperty( infos, key);
+						tempScore = Double.parseDouble(prop.getProperty(tempKey))*accumulator.get(key);
+						
+					}else {
+						 tempScore = Double.parseDouble(prop.getProperty(key))*accumulator.get(key);
+					}
 					System.out.println("key is" + key + "property value is" + prop.getProperty(key));
-					score = score + (prop.getProperty(key) == null ? 1 : Double.parseDouble(prop.getProperty(key)))
-							* accumulator.get(key);
+					score = score + tempScore;
 				}
 				/*only if component look up doesn't give any results*/
 				if(accumulator.isEmpty()) {
-					score = am.getTotalComponentsPendingMigration()* (prop.getProperty("mule4ComponentsWeigh") == null ? 1
-							: Double.parseDouble(prop.getProperty("mule4ComponentsWeigh")));
+					score = am.getTotalComponentsPendingMigration()* (prop.getProperty("mule4.componentsWeight") == null ? 1
+							: Double.parseDouble(prop.getProperty("mule4.componentsWeight")));
 				}
 
 				System.out.println("score is -->" + score);
 				am.setScoreOfComponents(score);
 				am.setScoreOfMELExpressions(am.getTotalMELExpressionsPendingMigration()
-						* (prop.getProperty("mule4MELExpressionWeigh") == null ? 1
-								: Double.parseDouble(prop.getProperty("mule4MELExpressionWeigh"))));
+						* (prop.getProperty("mule4.MELExpressionWeigh") == null ? 1
+								: Double.parseDouble(prop.getProperty("mule4.MELExpressionWeigh"))));
 				am.setScoreOfMELLineExpressions(am.getTotalDWLinesPendingMigration()
-						* (prop.getProperty("mule4MELLineExpressionWeigh") == null ? 1
-								: Double.parseDouble(prop.getProperty("mule4MELLineExpressionWeigh"))));
+						* (prop.getProperty("mule4.MELLineExpressionWeigh") == null ? 1
+								: Double.parseDouble(prop.getProperty("mule4.MELLineExpressionWeigh"))));
+				
+				am.setScoreOfDWLLines(am.getTotalDWLinesPendingMigration()
+						*(prop.getProperty("mule4.NumberOfDWLTransformationLines") == null ? 1
+						: Double.parseDouble(prop.getProperty("mule4.NumberOfDWLTransformationLines"))));
 
 				am.setMule4Score(am.getScoreOfComponents() +
 									am.getScoreOfMELExpressions() +
-									am.getScoreOfMELLineExpressions());
+									am.getScoreOfMELLineExpressions()+
+									am.getScoreOfDWLLines());
 
 				metaData.setMule4Metrics(am);
 			}
@@ -106,6 +119,18 @@ public class MMAReport {
 
 		}
 
+	}
+
+	private String findByProperty(List<MessageInfo> infos, String key) {
+		MessageInfo obj = infos.stream().filter(info -> key.equalsIgnoreCase(info.getId())).findFirst().orElse(null);
+		if(obj!=null) {
+			if(obj.getKey().equalsIgnoreCase("components.unsupported")) {
+				System.out.println("Unsupported missing key is" + key );
+				return "mule4.unsupportedComponentNotFoundWeight";
+			}
+		}
+		System.out.println("Supported missing key is" + key );
+		return "mule4.supportComponentNotFoundWeight";
 	}
 
 }

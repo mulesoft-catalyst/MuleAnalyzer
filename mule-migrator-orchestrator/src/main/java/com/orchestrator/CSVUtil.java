@@ -27,8 +27,8 @@ public class CSVUtil {
 			String muleVersion = metaData.getMuleVersion().contains("server.3")? "Mule 3": "Mule 4";
 			ar[2] = muleVersion;
 			if(!errorRecord) {
-				ar[7] = String.valueOf(metaData.getScore());
-				ar[8] = String.valueOf(metaData.getMule4Metrics().getMule4Score());
+				ar[7] = String.valueOf(Math.round(metaData.getScore()));
+				ar[8] = String.valueOf(Math.round(metaData.getMule4Metrics().getMule4Score()));
 			}else {
 				ar[7] = "0";
 				ar[8] = "0";

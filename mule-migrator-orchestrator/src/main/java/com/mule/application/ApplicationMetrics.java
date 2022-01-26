@@ -16,6 +16,8 @@ public class ApplicationMetrics {
 	private int totalDWLinesPendingMigration;
 	private int totalWarnings;
 	private int totalErrors;
+	
+	private double scoreOfDWLLines;
 
 	private double scoreOfComponents;
 
@@ -259,5 +261,15 @@ public class ApplicationMetrics {
 	public void setTotalErrors(int totalErrors) {
 		this.totalErrors = totalErrors;
 	}
+
+	public double getScoreOfDWLLines() {
+		return scoreOfDWLLines;
+	}
+
+	public void setScoreOfDWLLines(double scoreOfDWLLines) {
+		this.scoreOfDWLLines = scoreOfDWLLines;
+	}
+	
+	
 
 }
