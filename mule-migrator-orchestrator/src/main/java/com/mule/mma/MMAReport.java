@@ -32,13 +32,13 @@ public class MMAReport {
 
 		try {
 			Path fileName = Path.of(reportPath);
-			
+
 			if(!fileName.toFile().isFile()) {
 				throw new Exception("Report not generated");
 			}
-			
-			
-			
+
+
+
 			ApplicationMetrics am = metaData.getMule4Metrics();
 			String jsonReport = Files.readString(fileName);
 			JsonElement element = JsonParser.parseString(jsonReport);
@@ -53,7 +53,7 @@ public class MMAReport {
 				am.setTotalDWLines(mmaReport.get("numberOfDWTransformationLines").getAsInt());
 				am.setTotalDWLinesPendingMigration(mmaReport.get("numberOfDWTransformationLines").getAsInt()
 						- mmaReport.get("numberOfDWTransformationLinesMigrated").getAsInt());
-				
+
 				//metaData.setProjectName(mmaReport.get("projectName").getAsString());
 
 				JsonArray messages = mmaReport.get("detailedMessages").getAsJsonArray();
@@ -62,7 +62,7 @@ public class MMAReport {
 				for (int i = 0; i < messages.size(); i++) {
 					Gson gson = new Gson();
 					MessageInfo info = gson.fromJson(messages.get(i), MessageInfo.class);
-					if (!infos.contains(info)) {
+					if (!infos.contains(info) && info.getLevel() != "INFO") {
 						infos.add(info);
 						System.out.println("info has -->" + info.getKey() + info.getLevel() + info.getComponent());
 					}
@@ -95,17 +95,17 @@ public class MMAReport {
 				am.setScoreOfMELLineExpressions(am.getTotalDWLinesPendingMigration()
 						* (prop.getProperty("mule4MELLineExpressionWeigh") == null ? 1
 								: Double.parseDouble(prop.getProperty("mule4MELLineExpressionWeigh"))));
-				
+
 				am.setMule4Score(am.getScoreOfComponents() +
 									am.getScoreOfMELExpressions() +
 									am.getScoreOfMELLineExpressions());
-				
+
 				metaData.setMule4Metrics(am);
 			}
 		} catch (Exception e) {
 
 		}
-		
+
 	}
 
 }

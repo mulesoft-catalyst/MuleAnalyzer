@@ -70,12 +70,7 @@ public class MessageInfo {
 	}
 
 	public String getId() {
-		String[] ar = component.split(":");
-		if (ar[0].equalsIgnoreCase("")) {
-			return ar[1] + "." + level;
-		} else {
-			return ar[0] + "." + level;
-		}
+		return component+"."+level;
 	}
 
 }
