@@ -50,6 +50,9 @@ public class MMAReport {
 				am.setTotalMELExpressions(mmaReport.get("numberOfMELExpressions").getAsInt());
 				am.setTotalMELExpressionsPendingMigration(mmaReport.get("numberOfMELExpressions").getAsInt()
 						- mmaReport.get("numberOfMELExpressionsMigrated").getAsInt());
+				am.setTotalMELLineExpressions(mmaReport.get("numberOfMELExpressionLines").getAsInt());
+				am.setTotalMELLineExpressionsPendingMigration(mmaReport.get("numberOfMELExpressionLines").getAsInt()
+						- mmaReport.get("numberOfMELExpressionLinesMigrated").getAsInt());
 				am.setTotalDWLines(mmaReport.get("numberOfDWTransformationLines").getAsInt());
 				am.setTotalDWLinesPendingMigration(mmaReport.get("numberOfDWTransformationLines").getAsInt()
 						- mmaReport.get("numberOfDWTransformationLinesMigrated").getAsInt());
@@ -70,27 +73,24 @@ public class MMAReport {
 				}
 				double score = 0.0;
 
-				Map<String, Integer> accumulator = new HashMap<String, Integer>();
-				infos.forEach(t -> accumulator.merge(t.getId(), 1, Math::addExact));
-
 				double tempScore = 0.0;
 
-				for (String key : accumulator.keySet()) {
+				for (MessageInfo info : infos) {
 					
 					
-					if(prop.getProperty(key) == null) {
+					if(prop.getProperty(info.getId()) == null) {
 						
-						String tempKey = findByProperty( infos, key);
-						tempScore = Double.parseDouble(prop.getProperty(tempKey))*accumulator.get(key);
+						String tempKey = findByProperty( info);
+						tempScore = Double.parseDouble(prop.getProperty(tempKey));
 						
 					}else {
-						 tempScore = Double.parseDouble(prop.getProperty(key))*accumulator.get(key);
+						 tempScore = Double.parseDouble(prop.getProperty(info.getId()));
 					}
-					System.out.println("key is" + key + "property value is" + prop.getProperty(key));
+					System.out.println("key is" + info.getId() + "property value is" + prop.getProperty(info.getId()));
 					score = score + tempScore;
 				}
 				/*only if component look up doesn't give any results*/
-				if(accumulator.isEmpty()) {
+				if(infos.isEmpty()) {
 					score = am.getTotalComponentsPendingMigration()* (prop.getProperty("mule4.componentsWeight") == null ? 1
 							: Double.parseDouble(prop.getProperty("mule4.componentsWeight")));
 				}
@@ -100,7 +100,7 @@ public class MMAReport {
 				am.setScoreOfMELExpressions(am.getTotalMELExpressionsPendingMigration()
 						* (prop.getProperty("mule4.MELExpressionWeigh") == null ? 1
 								: Double.parseDouble(prop.getProperty("mule4.MELExpressionWeigh"))));
-				am.setScoreOfMELLineExpressions(am.getTotalDWLinesPendingMigration()
+				am.setScoreOfMELLineExpressions(am.getTotalMELLineExpressionsPendingMigration()
 						* (prop.getProperty("mule4.MELLineExpressionWeigh") == null ? 1
 								: Double.parseDouble(prop.getProperty("mule4.MELLineExpressionWeigh"))));
 				
@@ -121,15 +121,14 @@ public class MMAReport {
 
 	}
 
-	private String findByProperty(List<MessageInfo> infos, String key) {
-		MessageInfo obj = infos.stream().filter(info -> key.equalsIgnoreCase(info.getId())).findFirst().orElse(null);
+	private String findByProperty(MessageInfo obj) {
 		
 		if(null != obj && null != obj.getKey() && obj.getKey().equalsIgnoreCase("components.unsupported")) {
-			System.out.println("Unsupported missing key is" + key );
+			System.out.println("Unsupported missing key is" + obj.getId() );
 			return "mule4.unsupportedComponentNotFoundWeight";
 		}
 			
-		System.out.println("Supported missing key is" + key );
+		System.out.println("Supported missing key is" + obj.getId()  );
 		return "mule4.supportComponentNotFoundWeight";
 	}
 
