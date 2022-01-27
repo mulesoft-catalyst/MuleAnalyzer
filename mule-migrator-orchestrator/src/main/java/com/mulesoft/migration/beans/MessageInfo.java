@@ -66,7 +66,8 @@ public class MessageInfo {
 	}
 
 	public String getId() {
-		return component+"."+level;
+		String comp = component.replace(":", ".");
+		return comp+"."+level;
 	}
 
 }
