@@ -62,7 +62,7 @@ public class MMAReport {
 				for (int i = 0; i < messages.size(); i++) {
 					Gson gson = new Gson();
 					MessageInfo info = gson.fromJson(messages.get(i), MessageInfo.class);
-					if (!infos.contains(info) && info.getLevel() != "INFO") {
+					if (!info.getLevel().equalsIgnoreCase("INFO") && !infos.contains(info) ) {
 						infos.add(info);
 						System.out.println("info has -->" + info.getKey() + info.getLevel() + info.getComponent());
 					}
