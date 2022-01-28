@@ -11,6 +11,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -21,6 +23,8 @@ import org.xml.sax.SAXException;
 import com.mulesoft.migration.beans.FileMetaDataBean;
 
 public class ParseUnknownXMLStructure {
+	
+	private static Logger logger = LogManager.getLogger(ParseUnknownXMLStructure.class);
 	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
 		// Get Document Builder
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -41,12 +45,12 @@ public class ParseUnknownXMLStructure {
 
 		// Get all employees
 		NodeList nList = document.getElementsByTagName("mule");
-		System.out.println("=============START ANALYZING THE FILE===============");
+		//System.out.println("=============START ANALYZING THE FILE===============");
 
 		Map<String, List<String>> componentMap = new HashMap<String, List<String>>();
 		visitChildNodes(nList, componentMap, "Test", new FileMetaDataBean());
 
-		System.out.println(componentMap);
+		//System.out.println(componentMap);
 	}
 
 	// This function is called recursively
@@ -117,7 +121,7 @@ public class ParseUnknownXMLStructure {
 					String dwlCode = node.getTextContent();
 					long numLines = dwlCode.split("\r\n|\r|\n").length;
 					fileMetaDataBean.setDataWeaveCodeLength(fileMetaDataBean.getDataWeaveCodeLength() + numLines);
-					System.out.println("# of lines of code ::" + fileMetaDataBean.getDataWeaveCodeLength());
+					logger.debug("# of lines of code ::" + fileMetaDataBean.getDataWeaveCodeLength());
 				}
 
 //            System.out.println("Node Name = " + node.getNodeName() );

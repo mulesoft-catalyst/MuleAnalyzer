@@ -11,6 +11,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -21,6 +23,7 @@ import com.mulesoft.migration.beans.FileMetaDataBean;
 
 public class MunitAnalyzer {
 
+	private static Logger logger = LogManager.getLogger(MunitAnalyzer.class);
 	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
 		// Get Document Builder
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -40,13 +43,13 @@ public class MunitAnalyzer {
 		Element root = document.getDocumentElement();
 
 		NodeList nList = document.getElementsByTagName("mule");
-		System.out.println("=============START ANALYZING THE FILE===============");
+		//System.out.println("=============START ANALYZING THE FILE===============");
 
 		Map<String, List<String>> componentMap = new HashMap<>();
 
 		visitChildNodes(nList, componentMap, "Test", new FileMetaDataBean());
 
-		System.out.println(componentMap);
+		//System.out.println(componentMap);
 	}
 
 	public static void visitChildNodes(NodeList nList, Map<String, List<String>> componentMap, String fileName,
@@ -56,7 +59,7 @@ public class MunitAnalyzer {
 			Node node = nList.item(temp);
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				String nodeName = node.getNodeName();
-				System.out.println("node name is " + nodeName);
+				logger.debug("node name is " + nodeName);
 
 				if (node.hasChildNodes() && nodeName.equalsIgnoreCase("munit:test")) {
 					fileMetaDataBean.setNumberOfTests(fileMetaDataBean.getNumberOfTests() + 1);

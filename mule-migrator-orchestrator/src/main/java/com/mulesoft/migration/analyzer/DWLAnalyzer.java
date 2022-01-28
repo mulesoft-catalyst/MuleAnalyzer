@@ -21,7 +21,7 @@ public class DWLAnalyzer {
 
 		ProjectMetaDataBean projectMetaDataBean = new ProjectMetaDataBean();
 		analyzeDwls(projectName, projectMetaDataBean);
-		System.out.println(projectMetaDataBean.getDwlLinesofCode());
+		//System.out.println(projectMetaDataBean.getDwlLinesofCode());
 	}
 
 	public static void analyzeDwls(String dwlFolder, ProjectMetaDataBean projectMetaDataBean)

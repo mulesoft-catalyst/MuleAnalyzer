@@ -1,5 +1,7 @@
 package com.mulesoft.migration.analyzer;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -18,6 +20,7 @@ public class MuleFlowComponentFinder {
 
 	private static final String FILENAME = "/Users/mvijayvargia/Downloads/Mule3/Mule/acsessftpservice/src/main/app/globalconfig.xml";
 
+	private static Logger logger = LogManager.getLogger(MuleFlowComponentFinder.class);
 	public static void main(String[] args) {
 
 		// Instantiate the Factory
@@ -38,8 +41,8 @@ public class MuleFlowComponentFinder {
 			// http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 			doc.getDocumentElement().normalize();
 
-			System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
-			System.out.println("------");
+			logger.debug("Root Element :" + doc.getDocumentElement().getNodeName());
+			logger.debug("------");
 
 			// get <staff>
 			NodeList list = doc.getElementsByTagName("mule");
@@ -56,7 +59,7 @@ public class MuleFlowComponentFinder {
 
 					for (int temp1 = 0; temp1 < childNodes.getLength(); temp1++) {
 						Node childNode = list.item(temp);
-						System.out.println("childNode.getNodeName()::" + childNode.getNodeName());
+						logger.debug("childNode.getNodeName()::" + childNode.getNodeName());
 					}
 
 				}

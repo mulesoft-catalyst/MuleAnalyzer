@@ -201,6 +201,9 @@
                                 com.orchestrator.Orchestrator
                             </mainClass>
                         </manifest>
+                        <manifestEntries>
+							<Class-Path>config/</Class-Path>
+						</manifestEntries>
                     </archive>
                 </configuration>
             </plugin>

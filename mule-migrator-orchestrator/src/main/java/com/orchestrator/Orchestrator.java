@@ -16,6 +16,8 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -35,6 +37,8 @@ public class Orchestrator {
 	private static String PROJECTS_BASE_PATH = "";
 	private static String DESTINATION_PROJECTS_BASE_PATH = "";
 	
+	private static Logger logger = LogManager.getLogger(Orchestrator.class);
+	
 	private static FileFilter directoryFileFilter = new FileFilter() {
 	      //Override accept method
 	      public boolean accept(File file) {
@@ -50,10 +54,12 @@ public class Orchestrator {
 		
 		PropsUtil.loadProperties("config/config.properties");
 		
+		
+		
 		if(args.length > 0 && args.length == 4) {
 			PROJECTS_BASE_PATH = args[1];
 			DESTINATION_PROJECTS_BASE_PATH = args[3];
-			System.out.println("args -1"+ args[1]);
+			logger.debug("args -1"+ args[1]);
 		}else {
 			System.out.println("Arguments not provided hence started with default one");
 			System.out.println("Provide command line arguments in format : -projectBasePath <mule 3base path> -destinationProjectBasePath <mule 4 projects>");
@@ -116,7 +122,7 @@ public class Orchestrator {
 		metaDataBean.setMuleVersion(getMuleVersion(PROJECT_BASE_PATH));
 		try {
 			for(String arg: inputArgs) {
-				System.out.println("MMA Execution Start"+ arg);
+				logger.debug("MMA Execution Start"+ arg);
 			}
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			PrintStream ps = new PrintStream(baos);
@@ -124,6 +130,7 @@ public class Orchestrator {
 			PrintStream old = System.out;
 			// Tell Java to use your special stream
 			System.setOut(ps);
+			System.out.println("Going to run MMA for "+ inputArgs[1]);
 			MigrationRunner.run(inputArgs);
 			System.out.flush();
 			System.setOut(old);
@@ -135,7 +142,7 @@ public class Orchestrator {
 			}
 		} 
 		catch (Exception e) {
-			System.out.println("Error while calling MMA " + e);
+			logger.error("Error while calling MMA " + e);
 		}
 
 		/*
@@ -144,15 +151,17 @@ public class Orchestrator {
 		
 		MMAReport mr = new MMAReport();
 		try {
+			System.out.println("Going to parse MMA report for "+ DESTINATION_PROJECT_BASE_PATH);
 			mr.parseMMAReport(DESTINATION_PROJECT_BASE_PATH + DESTINATION_REPORT_REL_PATH, metaDataBean);
 		}catch(Exception e) {
 			if("Report not generated".equalsIgnoreCase(e.getMessage())) {
 				throw e;
 			}
 		}
-		
+		System.out.println("Going to Mule 3 code for  "+ PROJECT_BASE_PATH);
 		PrepareProjectList.analyzeProject(PROJECT_BASE_PATH, metaDataBean);
 		
+		System.out.println("writing scores to CSV file  ");
 		CSVUtil.writeToCSV(DESTINATION_PROJECTS_BASE_PATH+DESTINATION_CSV_FILE, metaDataBean, isErrorProject);
 		
 		
@@ -209,7 +218,7 @@ public class Orchestrator {
 						if(node.getNodeName().equalsIgnoreCase("artifactId")) {
 							projectName = node.getTextContent();
 							
-							System.out.println("setting project name as "+ node.getTextContent());
+							logger.debug("setting project name as "+ node.getTextContent());
 							
 							break;
 						}
@@ -219,7 +228,7 @@ public class Orchestrator {
 				}
 			}
 		}catch(Exception e) {
-			
+			logger.error(e);
 		}
 		return projectName;
 	}

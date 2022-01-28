@@ -19,7 +19,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.stream.StreamSupport;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.mule.application.ApplicationMetrics;
+import com.mulesoft.migration.analyzer.PrepareProjectList;
 import com.mulesoft.migration.beans.MessageInfo;
 import com.mulesoft.migration.beans.ProjectMetaDataBean;
 import com.orchestrator.PropsUtil;
@@ -27,6 +31,7 @@ import com.orchestrator.PropsUtil;
 public class MMAReport {
 
 	private static Properties prop = PropsUtil.getProps();
+	private static Logger logger = LogManager.getLogger(MMAReport.class);
 
 	public void parseMMAReport(String reportPath, ProjectMetaDataBean metaData) {
 
@@ -67,7 +72,7 @@ public class MMAReport {
 					MessageInfo info = gson.fromJson(messages.get(i), MessageInfo.class);
 					if (!info.getLevel().equalsIgnoreCase("INFO") && !infos.contains(info) ) {
 						infos.add(info);
-						System.out.println("info has -->" + info.getKey() + info.getLevel() + info.getComponent());
+						logger.debug("info has -->" + info.getKey() + info.getLevel() + info.getComponent());
 					}
 
 				}
@@ -125,10 +130,12 @@ public class MMAReport {
 		
 		if(null != obj && null != obj.getKey() && obj.getKey().equalsIgnoreCase("components.unsupported")) {
 			System.out.println("Unsupported missing key is" + obj.getId() );
+			logger.info("Unsupported missing key is" + obj.getId() );
 			return "mule4.unsupportedComponentNotFoundWeight";
 		}
 			
 		System.out.println("Supported missing key is" + obj.getId()  );
+		logger.info("Supported missing key is" + obj.getId() );
 		return "mule4.supportComponentNotFoundWeight";
 	}
 
