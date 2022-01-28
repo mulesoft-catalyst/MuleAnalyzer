@@ -8,10 +8,14 @@ import com.mulesoft.tools.migration.engine.exception.MigrationJobException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -34,8 +38,14 @@ public class Orchestrator {
 	
 	private static String DESTINATION_REPORT_REL_PATH = "/report/report.json";
 	
+	private static String DEPLOY_FILE_REL_PATH = "/src/main/app/mule-deploy.properties";
+	
+	private static String DOMAIN_FILE_REL_PATH = "/src/main/domain/mule-domain-config.xml";
+	
 	private static String PROJECTS_BASE_PATH = "";
 	private static String DESTINATION_PROJECTS_BASE_PATH = "";
+	
+	private static Properties prop ;
 	
 	private static Logger logger = LogManager.getLogger(Orchestrator.class);
 	
@@ -53,6 +63,7 @@ public class Orchestrator {
 	public static void main(String[] args) {
 		
 		PropsUtil.loadProperties("config/config.properties");
+		prop = PropsUtil.getProps();
 		
 		
 		
@@ -81,7 +92,12 @@ public class Orchestrator {
 		for(File dir : files) {
 			PROJECT_BASE_PATH = PROJECTS_BASE_PATH + "/" +dir.getName();
 			DESTINATION_PROJECT_BASE_PATH = DESTINATION_PROJECTS_BASE_PATH + "/" + dir.getName();
-			generateEstimate(PROJECT_BASE_PATH, DESTINATION_PROJECT_BASE_PATH, dir.getName());
+			try {
+				generateEstimate(PROJECT_BASE_PATH, DESTINATION_PROJECT_BASE_PATH, dir.getName());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		
@@ -90,7 +106,7 @@ public class Orchestrator {
 		
 	}
 
-	private static void generateEstimate(String PROJECT_BASE_PATH, String DESTINATION_PROJECT_BASE_PATH, String applicationName) {
+	private static void generateEstimate(String PROJECT_BASE_PATH, String DESTINATION_PROJECT_BASE_PATH, String applicationName)  throws Exception{
 		boolean isErrorProject = false;
 		
 		ApplicationMetrics am = new ApplicationMetrics();
@@ -113,6 +129,25 @@ public class Orchestrator {
 		 */
 		ProjectMetaDataBean metaDataBean = new ProjectMetaDataBean();
 		metaDataBean.setMule4Metrics(am);
+		
+		String domainProjectName = getDomainProjectName(PROJECT_BASE_PATH);
+		
+		if(domainProjectName!=null) {
+			File file = new File(PROJECTS_BASE_PATH+"/"+domainProjectName);
+			if(file.isDirectory()) {
+				inputArgs = new String[9];
+				inputArgs[0] = "-projectBasePath";
+				inputArgs[1] = am.getBasePath();
+				inputArgs[2] = "-destinationProjectBasePath";
+				inputArgs[3] = am.getDestinationPath();
+				inputArgs[4] = "-muleVersion";
+				inputArgs[5] = am.getApplicationVersion();
+				inputArgs[6] = "-jsonReport";
+				inputArgs[7] = "parentDomainBasePath";
+				inputArgs[8] = file.getCanonicalPath();
+				
+			}
+		}
 		
 		metaDataBean.setProjectName(getProjectName(PROJECT_BASE_PATH));
 		
@@ -159,12 +194,42 @@ public class Orchestrator {
 			}
 		}
 		System.out.println("Going to Mule 3 code for  "+ PROJECT_BASE_PATH);
+		
 		PrepareProjectList.analyzeProject(PROJECT_BASE_PATH, metaDataBean);
+		if(!notDomainProject(PROJECT_BASE_PATH)) {
+			metaDataBean.setScore(Double.parseDouble(prop.getProperty("mule3.scoreForDomainProject")));
+		}
 		
 		System.out.println("writing scores to CSV file  ");
 		CSVUtil.writeToCSV(DESTINATION_PROJECTS_BASE_PATH+DESTINATION_CSV_FILE, metaDataBean, isErrorProject);
 		
 		
+	}
+
+	private static boolean notDomainProject(String pROJECT_BASE_PATH) {
+		File file = new File(pROJECT_BASE_PATH+DOMAIN_FILE_REL_PATH);
+		if(!file.exists()) {
+			return true;
+		}
+		return false;
+	}
+
+	private static String getDomainProjectName(String pROJECT_BASE_PATH) {
+		Properties prop = new Properties();
+		if(!(new File(pROJECT_BASE_PATH+DEPLOY_FILE_REL_PATH).exists())) {
+			return null;
+		}
+		
+		try (InputStream input = new FileInputStream(pROJECT_BASE_PATH+DEPLOY_FILE_REL_PATH)) {
+			
+			// load a properties file
+			prop.load(input);
+			// get the property value and print it out
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}		
+		return prop.getProperty("domain");
 	}
 
 	private static String getMuleVersion(String PROJECT_BASE_PATH) {
