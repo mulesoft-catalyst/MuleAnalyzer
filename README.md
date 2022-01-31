@@ -1,10 +1,19 @@
+# Pre-requisite
+
+Include maven bin holder in PATH vriable
+Use Java 11 for running the executable
+
 # mule3Migrator
 
-This project can compile and build itself and MMA project
+This project can compile and build MMA project and itself
 
-Just run below command to compile and build orchestrator and MMA project
+Run below command to compile and build orchestrator and MMA project.
 
     ./runOrchestrator.sh
+    
+Optional parameter of development can be passed if analyzer code needs to be fetched from development branch
+
+    ./runOrchestrator.sh development
   
  Change directory to
  
