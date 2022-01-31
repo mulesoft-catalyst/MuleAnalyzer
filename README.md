@@ -1,7 +1,7 @@
 # Pre-requisite
 
-Include maven bin holder in PATH vriable
-Use Java 11 for running the executable
+    Include maven bin holder in PATH vriable
+    Use Java 11 for running the executable
 
 # mule3Migrator
 
