@@ -59,7 +59,7 @@ Run  mule mirator orchestrator
 
 Run following script to copy all MMA reports into one directory, that is destination path of mule 4 projects
 
-    ./moveReports.sh <detination folder for mule 4 projects>
+    ./moveReports.sh <destination folder for mule 4 projects>
     
   
   
