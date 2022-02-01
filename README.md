@@ -53,6 +53,13 @@ Run  mule mirator orchestrator
       api-platform-gw.WARN
       apikit-soap.ERROR
       apikit-soap.WARN
+      
+      
+## Copy Reports in one directory
+
+Run following script to copy all MMA reports into one directory, that is destination path of mule 4 projects
+
+    ./moveReports.sh <detination folder for mule 4 projects>
     
   
   
