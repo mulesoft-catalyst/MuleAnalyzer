@@ -103,10 +103,10 @@ public class PrepareProjectList {
 
 			analyzeSizeOfProject(projectMetaDataBean);
 			projectMetaDataBean
-					.setProjectName(Arrays.asList(projectName.split("/")).get(projectName.split("/").length - 1));
+					.setProjectName(dir.getName());
 
-			logger.debug(Arrays.asList(projectName.split("/")).get(projectName.split("/").length - 1));
-			logger.debug(Arrays.asList(projectName.split("/")));
+			//logger.debug(Arrays.asList(projectName.split(File.separator)).get(projectName.split(File.separator).length - 1));
+			//logger.debug(Arrays.asList(projectName.split(File.separator)));
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
