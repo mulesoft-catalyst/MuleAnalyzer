@@ -36,11 +36,14 @@ public class Orchestrator {
 	
 	private static String DESTINATION_CSV_FILE = "estimate.csv";
 	
-	private static String DESTINATION_REPORT_REL_PATH = "/report/report.json";
+	//private static String DESTINATION_REPORT_REL_PATH = "/report/report.json";
 	
-	private static String DEPLOY_FILE_REL_PATH = "/src/main/app/mule-deploy.properties";
+	private static String[] reportFiles = {"report", "report.json"};
 	
-	private static String DOMAIN_FILE_REL_PATH = "/src/main/domain/mule-domain-config.xml";
+	private static String[] DEPLOY_FILE_REL_PATH = {"src", "main", "app", "mule-deploy.properties"};
+	
+	
+	private static String[] DOMAIN_FILE_REL_PATH = {"src","main","domain","mule-domain-config.xml"};
 	
 	private static String PROJECTS_BASE_PATH = "";
 	private static String DESTINATION_PROJECTS_BASE_PATH = "";
@@ -48,6 +51,11 @@ public class Orchestrator {
 	private static Properties prop ;
 	
 	private static Logger logger = LogManager.getLogger(Orchestrator.class);
+	
+	private static String filePathBuilder(String[] pathNames) {
+		String path = String.join(File.separator, pathNames);
+		return path;
+	}
 	
 	private static FileFilter directoryFileFilter = new FileFilter() {
 	      //Override accept method
@@ -90,8 +98,8 @@ public class Orchestrator {
 		
 		
 		for(File dir : files) {
-			PROJECT_BASE_PATH = PROJECTS_BASE_PATH + "/" +dir.getName();
-			DESTINATION_PROJECT_BASE_PATH = DESTINATION_PROJECTS_BASE_PATH + "/" + dir.getName();
+			PROJECT_BASE_PATH = PROJECTS_BASE_PATH + File.separator +dir.getName();
+			DESTINATION_PROJECT_BASE_PATH = DESTINATION_PROJECTS_BASE_PATH + File.separator + dir.getName();
 			try {
 				generateEstimate(PROJECT_BASE_PATH, DESTINATION_PROJECT_BASE_PATH, dir.getName());
 			} catch (Exception e) {
@@ -133,7 +141,7 @@ public class Orchestrator {
 		String domainProjectName = getDomainProjectName(PROJECT_BASE_PATH);
 		
 		if(domainProjectName!=null) {
-			File file = new File(PROJECTS_BASE_PATH+"/"+domainProjectName);
+			File file = new File(PROJECTS_BASE_PATH+File.separator+domainProjectName);
 			if(file.isDirectory()) {
 				inputArgs = new String[9];
 				inputArgs[0] = "-projectBasePath";
@@ -187,7 +195,7 @@ public class Orchestrator {
 		MMAReport mr = new MMAReport();
 		try {
 			System.out.println("Going to parse MMA report for "+ DESTINATION_PROJECT_BASE_PATH);
-			mr.parseMMAReport(DESTINATION_PROJECT_BASE_PATH + DESTINATION_REPORT_REL_PATH, metaDataBean);
+			mr.parseMMAReport(DESTINATION_PROJECT_BASE_PATH+File.separator + filePathBuilder(reportFiles), metaDataBean);
 		}catch(Exception e) {
 			if("Report not generated".equalsIgnoreCase(e.getMessage())) {
 				throw e;
@@ -207,7 +215,7 @@ public class Orchestrator {
 	}
 
 	private static boolean notDomainProject(String pROJECT_BASE_PATH) {
-		File file = new File(pROJECT_BASE_PATH+DOMAIN_FILE_REL_PATH);
+		File file = new File(pROJECT_BASE_PATH+File.separator +filePathBuilder(DOMAIN_FILE_REL_PATH));
 		if(!file.exists()) {
 			return true;
 		}
@@ -216,11 +224,11 @@ public class Orchestrator {
 
 	private static String getDomainProjectName(String pROJECT_BASE_PATH) {
 		Properties prop = new Properties();
-		if(!(new File(pROJECT_BASE_PATH+DEPLOY_FILE_REL_PATH).exists())) {
+		if(!(new File(pROJECT_BASE_PATH+filePathBuilder(DEPLOY_FILE_REL_PATH)).exists())) {
 			return null;
 		}
 		
-		try (InputStream input = new FileInputStream(pROJECT_BASE_PATH+DEPLOY_FILE_REL_PATH)) {
+		try (InputStream input = new FileInputStream(pROJECT_BASE_PATH+File.separator+filePathBuilder(DEPLOY_FILE_REL_PATH))) {
 			
 			// load a properties file
 			prop.load(input);

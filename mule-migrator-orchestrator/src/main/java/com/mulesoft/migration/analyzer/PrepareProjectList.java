@@ -39,11 +39,25 @@ public class PrepareProjectList {
 	public static String parentMule3ProjectPath = "/Users/dsuneja/mule3";
 
 	public static String projectName = "/Users/dsuneja/mule3/jobapplicationapi";
+	
+	private static String[] APP_FOLDER = {"src", "main", "app"};
+	
+	
+	private static String[] MUNIT_FOLDER = {"src","test","munit"};
+	
+	private static String[] MULE_FOLDER = {"src","main","mule"};
+	
+	private static String[] RESOURCES_FOLDER = {"src","main","resources"};
 
 	public static Properties prop = PropsUtil.getProps();
 	
 	private static Logger logger = LogManager.getLogger(PrepareProjectList.class);
 
+	private static String filePathBuilder(String[] pathNames) {
+		String path = String.join(File.separator, pathNames);
+		return path;
+	}
+	
 	public static void main(String[] args) {
 		File currentDir = new File(parentMule3ProjectPath);
 
@@ -174,8 +188,8 @@ public class PrepareProjectList {
 								JsonObject muleArtifact = element.getAsJsonObject();
 								projectMetaDataBean.setMuleVersion(muleArtifact.get("minMuleVersion").getAsString());
 							}
-						}else if (fileName.endsWith(".xml") && (canonicalPath.contains("/src/main/app")
-								|| canonicalPath.contains("/src/main/mule"))) {
+						}else if (fileName.endsWith(".xml") && (canonicalPath.contains(filePathBuilder(APP_FOLDER))
+								|| canonicalPath.contains(filePathBuilder(MULE_FOLDER)))) {
 							logger.debug(fileName + "###### File is a mule configuration file........");
 
 							Map<String, FileMetaDataBean> fileMetaDataMap = projectMetaDataBean.getFileMetaDataMap();
@@ -215,10 +229,10 @@ public class PrepareProjectList {
 
 						} else if (fileName.endsWith(".dwl") &&
 
-								canonicalPath.contains("/src/main/resources")) {
+								canonicalPath.contains(filePathBuilder(RESOURCES_FOLDER))) {
 							DWLAnalyzer.analyzeDwls(canonicalPath, projectMetaDataBean);
 
-						} else if (fileName.endsWith(".xml") && canonicalPath.contains("/src/test/munit")) {
+						} else if (fileName.endsWith(".xml") && canonicalPath.contains(filePathBuilder(MUNIT_FOLDER))) {
 							Document document = builder.parse(new File(canonicalPath));
 // 	            		      Document document = builder.parse(new File("/Users/mvijayvargia/Downloads/Mule3/Mule/acsessftpservice/src/main/app/globalconfig.xml"));
 							Map<String, FileMetaDataBean> fileMetaDataMap = projectMetaDataBean.getFileMetaDataMap();
