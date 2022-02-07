@@ -63,7 +63,7 @@ Run  mule mirator orchestrator
         ... dependency jars
       mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar
   
-  Run  mule mirator orchestrator
+  Run  mule migrator orchestrator
 
     java -jar mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar -projectBasePath <Mule3Project path> -destinationProjectBasePath <Mule 4 project path>
     
