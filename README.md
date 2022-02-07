@@ -1,5 +1,7 @@
 # mule3Migrator
 
+# Instructions for build and deploy
+
 This project can compile and build itself and MMA project
 
 Just run below command to compile and build orchestrator and MMA project
@@ -44,6 +46,26 @@ Run  mule mirator orchestrator
       api-platform-gw.WARN
       apikit-soap.ERROR
       apikit-soap.WARN
+      
+      
+      
+  # Instructions for using the runnable
+  
+  Excutable zip is available inside zip folder
+  
+  Unzip mule-migrator-orchestrator-0.0.1-SNAPSHOT.zip in target directory
+  
+  Change directory mule-migrator-orchestrator-0.0.1-SNAPSHOT 
+ ## Directory structure in mule-migrator-orchestrator-0.0.1-SNAPSHOT will be like 
+      conf
+        config.properties
+      libs
+        ... dependency jars
+      mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar
+  
+  Run  mule mirator orchestrator
+
+    java -jar mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar -projectBasePath <Mule3Project path> -destinationProjectBasePath <Mule 4 project path>
     
   
   
