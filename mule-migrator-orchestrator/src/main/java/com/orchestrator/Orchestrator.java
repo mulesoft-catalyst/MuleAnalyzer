@@ -116,7 +116,7 @@ public class Orchestrator {
 
 	private static void generateEstimate(String PROJECT_BASE_PATH, String DESTINATION_PROJECT_BASE_PATH, String applicationName)  throws Exception{
 		boolean isErrorProject = false;
-		
+		System.out.println("Project getting processed: "+ PROJECT_BASE_PATH);
 		ApplicationMetrics am = new ApplicationMetrics();
 		//am.setApplicationName(applicationName);
 		am.setBasePath(PROJECT_BASE_PATH);
@@ -151,7 +151,7 @@ public class Orchestrator {
 				inputArgs[4] = "-muleVersion";
 				inputArgs[5] = am.getApplicationVersion();
 				inputArgs[6] = "-jsonReport";
-				inputArgs[7] = "parentDomainBasePath";
+				inputArgs[7] = "-parentDomainBasePath";
 				inputArgs[8] = file.getCanonicalPath();
 				
 			}
@@ -224,7 +224,7 @@ public class Orchestrator {
 
 	private static String getDomainProjectName(String pROJECT_BASE_PATH) {
 		Properties prop = new Properties();
-		if(!(new File(pROJECT_BASE_PATH+filePathBuilder(DEPLOY_FILE_REL_PATH)).exists())) {
+		if(!(new File(pROJECT_BASE_PATH+File.separator+filePathBuilder(DEPLOY_FILE_REL_PATH)).exists())) {
 			return null;
 		}
 		

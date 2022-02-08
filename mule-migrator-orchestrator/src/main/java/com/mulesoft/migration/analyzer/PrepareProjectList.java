@@ -121,7 +121,7 @@ public class PrepareProjectList {
 				.mapToLong(o -> o.getNumberOfComponents()).sum();
 
 		long totalLinesOfDWLCode = projectMetaDataBean.getFileMetaDataMap().values().stream().mapToLong(o -> o.getDataWeaveCodeLength())
-						.sum();
+						.sum()+ projectMetaDataBean.getDwlLinesofCode().values().stream().mapToLong(n -> n).sum();
 
 		long numberOfMunits = projectMetaDataBean.getFileMetaDataMap().values().stream()
 				.filter(o -> o.getFileType().equalsIgnoreCase("test-suite")).mapToLong(o -> o.getNumberOfTests()).sum();

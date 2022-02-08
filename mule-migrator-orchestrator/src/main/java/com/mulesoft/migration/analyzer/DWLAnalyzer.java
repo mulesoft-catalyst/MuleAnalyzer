@@ -15,12 +15,12 @@ import com.mulesoft.migration.beans.ProjectMetaDataBean;
 
 public class DWLAnalyzer {
 
-	public static String projectName = "/Users/dsuneja/AnypointStudio/architectWS/jobapplicationapi/src/main/resources/dwl";
+	//public static String projectName = "/Users/dsuneja/AnypointStudio/architectWS/jobapplicationapi/src/main/resources/dwl";
 
 	public static void main(String args[]) throws FileNotFoundException, IOException {
 
 		ProjectMetaDataBean projectMetaDataBean = new ProjectMetaDataBean();
-		analyzeDwls(projectName, projectMetaDataBean);
+	//	analyzeDwls(projectName, projectMetaDataBean);
 		//System.out.println(projectMetaDataBean.getDwlLinesofCode());
 	}
 
@@ -30,20 +30,23 @@ public class DWLAnalyzer {
 //	     Map<String, String> projectMap =  displayDirectoryContents(currentDir);
 
 //	     System.out.println("# of Projects::" +  projectMap.size());
-		File dir = new File(projectName);
-		Map<String, Long> dwlLinesofCode = new HashMap<>();
-		for (File file : dir.listFiles()) {
-			if (file.isFile()) {
+		File file = new File(dwlFolder);
+		
+		
+		
+		System.out.println("file/directory passed: "+file.getName());
+			if (file.isFile() &&  file.getName().contains(".dwl")) {
 				try (Stream<String> stream = Files.lines(Paths.get(file.toURI()))) {
 					long linesCount = stream.filter(lines -> !(lines.startsWith("%dw") || lines.startsWith("%output")))
 							.count();
-					dwlLinesofCode.put(file.getName(), new Long(linesCount));
+					
+					projectMetaDataBean.getDwlLinesofCode().put(file.getName(), new Long(linesCount));
 				}
 			}
 
-			projectMetaDataBean.setDwlLinesofCode(dwlLinesofCode);
+			
 
-		}
+		
 	}
 
 }
