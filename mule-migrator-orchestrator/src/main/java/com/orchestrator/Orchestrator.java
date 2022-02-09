@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,24 +94,47 @@ public class Orchestrator {
 		
 		File[] files = file.listFiles(directoryFileFilter);
 		
+		List<String> dirs = new ArrayList<>();
+		
+		getDirectoriesWithMuleProjects(dirs, files);
 		
 		
 		
-		
-		for(File dir : files) {
-			PROJECT_BASE_PATH = PROJECTS_BASE_PATH + File.separator +dir.getName();
-			DESTINATION_PROJECT_BASE_PATH = DESTINATION_PROJECTS_BASE_PATH + File.separator + dir.getName();
+		for(String dir: dirs) {
+			PROJECT_BASE_PATH = dir;
+			String projectName = dir.substring(dir.lastIndexOf(File.separatorChar)+1, dir.length());
+		//	System.out.println(projectName);
+			DESTINATION_PROJECT_BASE_PATH = DESTINATION_PROJECTS_BASE_PATH + File.separator + projectName;
 			try {
-				generateEstimate(PROJECT_BASE_PATH, DESTINATION_PROJECT_BASE_PATH, dir.getName());
+				generateEstimate(PROJECT_BASE_PATH, DESTINATION_PROJECT_BASE_PATH, projectName);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
 		
 		
 		// TODO Auto-generated method stub
 		
+		
+	}
+
+	private static void getDirectoriesWithMuleProjects(List<String> dirs, File[] files) {
+		try {
+			for(File dir: files) {
+				String srcFolderPath = dir.getCanonicalPath()+File.separator+"src";
+				if(new File(srcFolderPath).isDirectory()) {
+					dirs.add(dir.getCanonicalPath());
+				//	System.out.println("Mule project getting added"+dir.getCanonicalPath());
+				}else {
+					getDirectoriesWithMuleProjects(dirs, dir.listFiles(directoryFileFilter));
+				}
+			}
+		}
+		catch(Exception e) {
+			logger.error("Error while identifying directories");
+		}
 		
 	}
 
