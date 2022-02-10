@@ -12,11 +12,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -164,9 +169,16 @@ public class Orchestrator {
 		
 		String domainProjectName = getDomainProjectName(PROJECT_BASE_PATH);
 		
-		if(domainProjectName!=null) {
-			File file = new File(PROJECTS_BASE_PATH+File.separator+domainProjectName);
-			if(file.isDirectory()) {
+		if(domainProjectName!=null && !"default".equalsIgnoreCase(domainProjectName)) {
+			//File dir = new File(PROJECTS_BASE_PATH);
+			Path directory = Paths.get(PROJECTS_BASE_PATH);
+			File file = new File("");
+			List<Path> directories = Files.walk(directory).filter(Files::isDirectory).collect(Collectors.toList());
+			for(Path path: directories) {
+				if(path.toFile().getCanonicalPath().endsWith(domainProjectName))
+					file =  new File(path.toFile().getCanonicalPath());
+			}
+			if(file != null && file.isDirectory()) {
 				inputArgs = new String[9];
 				inputArgs[0] = "-projectBasePath";
 				inputArgs[1] = am.getBasePath();
@@ -177,6 +189,7 @@ public class Orchestrator {
 				inputArgs[6] = "-jsonReport";
 				inputArgs[7] = "-parentDomainBasePath";
 				inputArgs[8] = file.getCanonicalPath();
+				System.out.println(file.getCanonicalPath());
 				
 			}
 		}
@@ -186,6 +199,7 @@ public class Orchestrator {
 		/*
 		 * this is only if project is non Mule 3 project
 		 */
+		
 		metaDataBean.setMuleVersion(getMuleVersion(PROJECT_BASE_PATH));
 		try {
 			for(String arg: inputArgs) {
@@ -211,7 +225,7 @@ public class Orchestrator {
 		catch (Exception e) {
 			logger.error("Error while calling MMA " + e);
 		}
-
+	
 		/*
 		 * Read the JSON report and update ApplicationMetrics object
 		 */
@@ -238,6 +252,7 @@ public class Orchestrator {
 		
 	}
 
+	
 	private static boolean notDomainProject(String pROJECT_BASE_PATH) {
 		File file = new File(pROJECT_BASE_PATH+File.separator +filePathBuilder(DOMAIN_FILE_REL_PATH));
 		if(!file.exists()) {
