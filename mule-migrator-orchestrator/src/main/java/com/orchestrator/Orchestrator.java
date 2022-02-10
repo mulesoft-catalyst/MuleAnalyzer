@@ -54,6 +54,8 @@ public class Orchestrator {
 	private static String PROJECTS_BASE_PATH = "";
 	private static String DESTINATION_PROJECTS_BASE_PATH = "";
 	
+	private static String LITE_ANALYZER = "analyzerLite";
+	
 	private static Properties prop ;
 	
 	private static Logger logger = LogManager.getLogger(Orchestrator.class);
@@ -79,12 +81,16 @@ public class Orchestrator {
 		PropsUtil.loadProperties("config/config.properties");
 		prop = PropsUtil.getProps();
 		
-		
+		String runningLite = null;
 		
 		if(args.length > 0 && args.length == 4) {
 			PROJECTS_BASE_PATH = args[1];
 			DESTINATION_PROJECTS_BASE_PATH = args[3];
 			logger.debug("args -1"+ args[1]);
+		}else if(args.length > 0 && args.length == 5){
+			PROJECTS_BASE_PATH = args[1];
+			DESTINATION_PROJECTS_BASE_PATH = args[3];
+			runningLite = args[4];
 		}else {
 			System.out.println("Arguments not provided hence started with default one");
 			System.out.println("Provide command line arguments in format : -projectBasePath <mule 3base path> -destinationProjectBasePath <mule 4 projects>");
@@ -92,6 +98,21 @@ public class Orchestrator {
 		}
 		
 		
+		if(runningLite != null && runningLite.equalsIgnoreCase(LITE_ANALYZER)) {
+			generateLiteEstimate(PROJECTS_BASE_PATH, DESTINATION_PROJECTS_BASE_PATH);
+		}else {
+			generateCompleteEstimate();
+		}
+		
+		
+		
+		
+		// TODO Auto-generated method stub
+		
+		
+	}
+	
+	private static void generateCompleteEstimate() {
 		File file = new File(PROJECTS_BASE_PATH);
 		
 		String PROJECT_BASE_PATH = "";
@@ -118,9 +139,45 @@ public class Orchestrator {
 			}
 			
 		}
-		
-		
-		// TODO Auto-generated method stub
+	}
+
+	private static void generateLiteEstimate(String sourcePath, String destinationPath) {
+		// identinfy all reports file
+		Path sourceDir = Paths.get(sourcePath);
+		try {
+			List<Path> files = Files.walk(sourceDir).filter(Files::isRegularFile).filter(p -> p.toFile().getName().contains(".json")).collect(Collectors.toList());
+			
+			for(Path file: files) {
+				System.out.println("file getting analyzed "+ file.toFile().getCanonicalPath());
+				ApplicationMetrics am = new ApplicationMetrics();
+				ProjectMetaDataBean metaDataBean = new ProjectMetaDataBean();
+				metaDataBean.setMule4Metrics(am);
+				
+				if(Files.lines(file).filter(s -> s.contains("numberOfMuleComponents")).count() == 0) {
+					logger.error("skipping file as it is not report.json "+ file.toFile().getCanonicalPath());
+					continue;
+				}
+				// set mule version
+				metaDataBean.setMuleVersion("server.3");
+				MMAReport mma = new MMAReport();
+				
+				// get mule 4 score
+				mma.parseMMAReport(file.toFile().getCanonicalPath(), metaDataBean);
+				//get project name
+				//get Mule 3 score
+				mma.parseMMAReportForMule3Score(file.toFile().getCanonicalPath(), metaDataBean);
+				
+				CSVUtil.writeToCSV(DESTINATION_PROJECTS_BASE_PATH+File.separator+DESTINATION_CSV_FILE, metaDataBean, false);
+				
+				//am.setApplicationName(applicationName);
+				//am.setBasePath(PROJECT_BASE_PATH);
+				//am.setDestinationPath(DESTINATION_PROJECT_BASE_PATH);
+				
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 	}
@@ -218,7 +275,7 @@ public class Orchestrator {
 			System.out.println("baos out->"+baos.toString());
 			if(baos.toString().contains("Cannot read mule project")) {
 				isErrorProject = true;
-				CSVUtil.writeToCSV(DESTINATION_PROJECTS_BASE_PATH+DESTINATION_CSV_FILE, metaDataBean, isErrorProject);
+				CSVUtil.writeToCSV(DESTINATION_PROJECTS_BASE_PATH+File.separator+DESTINATION_CSV_FILE, metaDataBean, isErrorProject);
 				return;
 			}
 		} 
@@ -247,7 +304,7 @@ public class Orchestrator {
 		}
 		
 		System.out.println("writing scores to CSV file  ");
-		CSVUtil.writeToCSV(DESTINATION_PROJECTS_BASE_PATH+DESTINATION_CSV_FILE, metaDataBean, isErrorProject);
+		CSVUtil.writeToCSV(DESTINATION_PROJECTS_BASE_PATH+File.separator+DESTINATION_CSV_FILE, metaDataBean, isErrorProject);
 		
 		
 	}

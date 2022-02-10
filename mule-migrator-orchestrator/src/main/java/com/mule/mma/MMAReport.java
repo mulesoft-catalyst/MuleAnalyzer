@@ -125,6 +125,34 @@ public class MMAReport {
 		}
 
 	}
+	
+	
+	public void parseMMAReportForMule3Score(String reportPath, ProjectMetaDataBean metaData) {
+		try {
+			Path fileName = Path.of(reportPath);
+
+			if(!fileName.toFile().isFile()) {
+				throw new Exception("Report not generated");
+			}
+
+
+
+			ApplicationMetrics am = metaData.getMule4Metrics();
+			String jsonReport = Files.readString(fileName);
+			JsonElement element = JsonParser.parseString(jsonReport);
+			if (element.isJsonObject()) {
+				JsonObject mmaReport = element.getAsJsonObject();
+				metaData.setProjectName(mmaReport.get("projectName").getAsString());
+				double score = am.getTotalComponents()*Double.parseDouble(prop.getProperty("mule3.componentsWeightFactor"))
+							+ am.getTotalMELLineExpressions()* Double.parseDouble(prop.getProperty("mule3.dwlLinesOfCodeWeightFactor"))
+							+ am.getTotalDWLines()* Double.parseDouble(prop.getProperty("mule3.dwlLinesOfCodeWeightFactor"));
+				metaData.setScore(score);
+				
+			}
+		} catch (Exception e) {
+
+		}
+	}
 
 	private String findByProperty(MessageInfo obj) {
 		
