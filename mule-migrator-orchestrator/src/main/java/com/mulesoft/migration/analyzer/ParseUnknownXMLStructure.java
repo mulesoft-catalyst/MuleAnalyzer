@@ -31,7 +31,7 @@ public class ParseUnknownXMLStructure {
 		DocumentBuilder builder = factory.newDocumentBuilder();
 
 		// Build Document
-		String flowFile = "/Users/dsuneja/mule3/jobapplicationapi/src/main/mule/jobapplication.xml";
+		String flowFile = "/Users/dsuneja/mule3/mule3Projects/IndependentReq/src/main/app/IndependentReq.xml";
 		String dwlFilename = "/Users/mvijayvargia/Documents/POC/ap-workspaces/trails-api/cdhs-trails2decl-prvdr-batch-app/src/main/mule/cdhs-trails2decl-prvdr-batch-app.xml";
 		Document document = builder.parse(new File(flowFile));
 //      Document document = builder.parse(new File("/Users/mvijayvargia/Downloads/Mule3/Mule/acsessftpservice/src/main/app/globalconfig.xml"));
@@ -125,7 +125,7 @@ public class ParseUnknownXMLStructure {
 				}
 
 //            System.out.println("Node Name = " + node.getNodeName() );
-
+				addNodeToMap(componentMap, nodeName);
 				visitFlowNodes(node.getChildNodes(), componentMap, fileMetaDataBean);
 
 			}
@@ -141,6 +141,7 @@ public class ParseUnknownXMLStructure {
 			list = new ArrayList<String>();
 			list.add(nodeName);
 		}
+		list.add(nodeName);
 		componentMap.put(nodeName, list);
 
 	}

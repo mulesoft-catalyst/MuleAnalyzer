@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -159,6 +161,7 @@ public class PrepareProjectList {
 			for (File file : files) {
 
 				String fileName = file.getName();
+				System.out.println("directories getting scanned "+ fileName);
 				String canonicalPath = file.getCanonicalPath();
 				String folderSkipList = prop.getProperty("foldersSkipList");
 
@@ -219,7 +222,12 @@ public class PrepareProjectList {
 // 	            		      System.out.println(nList);
 
 							ParseUnknownXMLStructure.visitChildNodes(nList, componentMap, fileName, fileMetaDataBean);
-							fileMetaDataBean.setNumberOfComponents(new Long(componentMap.keySet().size()));
+							System.out.println("component map for file "+ fileName + " :::: "+ componentMap);
+							long items = 0;
+							for(List ls: componentMap.values()) {
+								items=items+ls.size();
+							}
+							fileMetaDataBean.setNumberOfComponents(items);
 
 							logger.debug("components parsed from Mule 3 file" + componentMap);
 
