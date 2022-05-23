@@ -1,5 +1,5 @@
 echo "downloading mma"
-curl https://github.com/mulesoft/mule-migration-assistant/archive/refs/heads/chore/mig-cost.zip -o mig-cost.zip >> run.log
+curl https://github.com/mulesoft/mule-migration-assistant/archive/refs/heads/master.zip -o mig-cost.zip >> run.log
 Expand-Archive -Path mig-cost.zip 
 echo "downloading migration estimator"
 $orchestratorPath="mule3MigratorOrchestrator/mule3Migrator-main/mule-migrator-orchestrator"
