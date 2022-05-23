@@ -1,4 +1,4 @@
-curl -L https://github.com/mulesoft/mule-migration-assistant/archive/refs/heads/chore/mig-cost.zip -o mig-cost.zip | tee -a run.log
+curl -L https://github.com/mulesoft/mule-migration-assistant/archive/refs/heads/master.zip -o mig-cost.zip | tee -a run.log
 unzip mig-cost.zip | tee -a run.log
 if  [ $# -ne 0 ] && [  'development' == $1 ]
 then
