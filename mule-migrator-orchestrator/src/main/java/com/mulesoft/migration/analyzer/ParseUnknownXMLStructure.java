@@ -11,6 +11,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -21,13 +23,15 @@ import org.xml.sax.SAXException;
 import com.mulesoft.migration.beans.FileMetaDataBean;
 
 public class ParseUnknownXMLStructure {
+	
+	private static Logger logger = LogManager.getLogger(ParseUnknownXMLStructure.class);
 	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
 		// Get Document Builder
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 
 		// Build Document
-		String flowFile = "/Users/dsuneja/mule3/jobapplicationapi/src/main/mule/jobapplication.xml";
+		String flowFile = "/Users/dsuneja/mule3/mule3Projects/IndependentReq/src/main/app/IndependentReq.xml";
 		String dwlFilename = "/Users/mvijayvargia/Documents/POC/ap-workspaces/trails-api/cdhs-trails2decl-prvdr-batch-app/src/main/mule/cdhs-trails2decl-prvdr-batch-app.xml";
 		Document document = builder.parse(new File(flowFile));
 //      Document document = builder.parse(new File("/Users/mvijayvargia/Downloads/Mule3/Mule/acsessftpservice/src/main/app/globalconfig.xml"));
@@ -41,12 +45,12 @@ public class ParseUnknownXMLStructure {
 
 		// Get all employees
 		NodeList nList = document.getElementsByTagName("mule");
-		System.out.println("=============START ANALYZING THE FILE===============");
+		//System.out.println("=============START ANALYZING THE FILE===============");
 
 		Map<String, List<String>> componentMap = new HashMap<String, List<String>>();
 		visitChildNodes(nList, componentMap, "Test", new FileMetaDataBean());
 
-		System.out.println(componentMap);
+		//System.out.println(componentMap);
 	}
 
 	// This function is called recursively
@@ -117,11 +121,11 @@ public class ParseUnknownXMLStructure {
 					String dwlCode = node.getTextContent();
 					long numLines = dwlCode.split("\r\n|\r|\n").length;
 					fileMetaDataBean.setDataWeaveCodeLength(fileMetaDataBean.getDataWeaveCodeLength() + numLines);
-					System.out.println("# of lines of code ::" + fileMetaDataBean.getDataWeaveCodeLength());
+					logger.debug("# of lines of code ::" + fileMetaDataBean.getDataWeaveCodeLength());
 				}
 
 //            System.out.println("Node Name = " + node.getNodeName() );
-
+				addNodeToMap(componentMap, nodeName);
 				visitFlowNodes(node.getChildNodes(), componentMap, fileMetaDataBean);
 
 			}
@@ -137,6 +141,7 @@ public class ParseUnknownXMLStructure {
 			list = new ArrayList<String>();
 			list.add(nodeName);
 		}
+		list.add(nodeName);
 		componentMap.put(nodeName, list);
 
 	}

@@ -1,19 +1,12 @@
-# Pre-requisite
-
-    Include maven bin holder in PATH variable
-    Use Java 11 for running the executable
-
 # mule3Migrator
 
-This project can compile and build MMA project and itself
+# Instructions for build and deploy
 
-Run below command to compile and build orchestrator and MMA project.
+This project can compile and build itself and MMA project
+
+Just run below command to compile and build orchestrator and MMA project
 
     ./runOrchestrator.sh
-    
-Optional parameter of development can be passed if analyzer code needs to be fetched from development branch
-
-    ./runOrchestrator.sh development
   
  Change directory to
  
@@ -55,13 +48,22 @@ Run  mule mirator orchestrator
       apikit-soap.WARN
       
       
-## Copy Reports in one directory
+      
+  # Instructions for using the runnable
+  
+  Excutable zip is available inside zip folder
+  
+  Unzip mule-migrator-orchestrator-0.0.1-SNAPSHOT.zip in target directory
+  
+  Change directory mule-migrator-orchestrator-0.0.1-SNAPSHOT 
+ ## Directory structure in mule-migrator-orchestrator-0.0.1-SNAPSHOT will be like 
+      conf
+        config.properties
+      libs
+        ... dependency jars
+      mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar
+  
+  Run  mule migrator orchestrator
 
-Run following script to copy all MMA reports into one directory, that is destination path of mule 4 projects
-
-    ./moveReports.sh <destination folder for mule 4 projects>
+    java -jar mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar -projectBasePath <Mule3Project path> -destinationProjectBasePath <Mule 4 project path>
     
-  
-  
-  
-  

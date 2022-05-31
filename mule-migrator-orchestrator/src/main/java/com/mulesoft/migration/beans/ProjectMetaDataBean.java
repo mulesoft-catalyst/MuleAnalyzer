@@ -30,6 +30,9 @@ public class ProjectMetaDataBean implements Serializable {
 	private ApplicationMetrics mule4Metrics;
 
 	public Map<String, Long> getDwlLinesofCode() {
+		if(dwlLinesofCode==null) {
+			dwlLinesofCode =  new HashMap<String, Long>();
+		}
 		return dwlLinesofCode;
 	}
 

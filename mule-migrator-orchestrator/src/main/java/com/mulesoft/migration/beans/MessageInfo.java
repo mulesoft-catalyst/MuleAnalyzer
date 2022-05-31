@@ -32,12 +32,13 @@ public class MessageInfo {
 		this.component = component;
 	}
 
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((component == null) ? 0 : component.hashCode());
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
 		result = prime * result + ((level == null) ? 0 : level.hashCode());
 		return result;
 	}
@@ -56,11 +57,6 @@ public class MessageInfo {
 				return false;
 		} else if (!component.equals(other.component))
 			return false;
-		if (key == null) {
-			if (other.key != null)
-				return false;
-		} else if (!key.equals(other.key))
-			return false;
 		if (level == null) {
 			if (other.level != null)
 				return false;
@@ -70,12 +66,8 @@ public class MessageInfo {
 	}
 
 	public String getId() {
-		String[] ar = component.split(":");
-		if (ar[0].equalsIgnoreCase("")) {
-			return ar[1] + "." + level;
-		} else {
-			return ar[0] + "." + level;
-		}
+		String comp = component.replace(":", ".");
+		return comp+"."+level;
 	}
 
 }
