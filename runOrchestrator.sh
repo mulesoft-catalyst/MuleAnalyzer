@@ -1,5 +1,6 @@
 curl -L https://github.com/mulesoft/mule-migration-assistant/archive/refs/heads/master.zip -o mig-cost.zip | tee -a run.log
-unzip mig-cost.zip -d mule-migration-assistant-chore-mig-cost | tee -a run.log
+unzip mig-cost.zip | tee -a run.log
+mv mule-migration-assistant* mule-migration-assistant-chore-mig-cost
 if  [ $# -ne 0 ] && [  'development' == $1 ]
 then
 	curl -L https://github.com/dsuneja/mule3Migrator/archive/refs/heads/development.zip -o mule3MigratorOrchestrator.zip | tee -a run.log
