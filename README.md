@@ -28,9 +28,9 @@ Just run below command to compile and build orchestrator and MMA project
 
 ## How to Run  mule migrator orchestrator
   
-  Full Version
+  - Full Version
       java -jar mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar -projectBasePath <Mule3Project path> -destinationProjectBasePath <Mule 4 project path>
-  Lite Version
+  - Lite Version
       java -jar mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar -mule4ReportsSourceBasePath <Mule4 MMA Reports path> -mule4ReportsDestinationBasePath <Mule 4 Final report path> analyzerLite
   
   
