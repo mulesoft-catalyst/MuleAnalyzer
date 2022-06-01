@@ -62,18 +62,22 @@ public class ParseUnknownXMLStructure {
 			Node node = nList.item(temp);
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				String nodeName = node.getNodeName();
-				if (!(nodeName.equalsIgnoreCase("mule") || nodeName.equalsIgnoreCase("flow"))) { // Ignoring flow and
-																									// mule xml tag
-																									// names as
-																									// connector
-																									// configuration
-																									// doesn't start
-																									// with mule/flow
+				if (!(nodeName.equalsIgnoreCase("mule") || nodeName.equalsIgnoreCase("flow"))) { 	// Ignoring flow and
+																				                    // mule xml tag
+																				                    // names as
+																				                    // connector
+																				                    // configuration
+																				                    // doesn't start
+																				                    // with mule/flow
+					logger.debug("Adding to component map for node : "+nodeName );
 					addNodeToMap(componentMap, nodeName);
 				}
 
 //            System.out.println("Node Name = " + node.getNodeName() );
 				// Check all attributes
+				
+				
+				/* Commented on 04/27/2022 - Logic not being used
 				if (!(nodeName.equalsIgnoreCase("mule")) && node.hasAttributes()) {
 					// get attributes names and values
 					NamedNodeMap nodeMap = node.getAttributes();
@@ -89,13 +93,17 @@ public class ParseUnknownXMLStructure {
 //               System.out.println("################################################");
 
 				}
+				*/
 
 				if (node.hasChildNodes() && !(nodeName.equalsIgnoreCase("flow")
 						|| nodeName.equalsIgnoreCase("choice-exception-strategy"))) {
 					// We got more childs; Let's visit them as well
+					logger.debug("Node :"+node+" is not a flow and has childnodes, nodeName= "+nodeName );
 					visitChildNodes(node.getChildNodes(), componentMap, fileName, fileMetaDataBean);
 				} else {
+					logger.debug("Node :"+node+" is in the else logic, nodeName= "+nodeName );
 					visitFlowNodes(node.getChildNodes(), componentMap, fileMetaDataBean);
+					
 				}
 
 			}
@@ -139,10 +147,12 @@ public class ParseUnknownXMLStructure {
 		List<String> list = componentMap.get(nodeName);
 		if (list == null || list.size() == 0) {
 			list = new ArrayList<String>();
-			list.add(nodeName);
+			//list.add(nodeName);
 		}
 		list.add(nodeName);
 		componentMap.put(nodeName, list);
 
 	}
 }
+
+

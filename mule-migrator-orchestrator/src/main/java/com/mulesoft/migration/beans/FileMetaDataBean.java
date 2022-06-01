@@ -1,7 +1,6 @@
 package com.mulesoft.migration.beans;
 
 import java.util.List;
-import java.util.Map;
 
 public class FileMetaDataBean {
 

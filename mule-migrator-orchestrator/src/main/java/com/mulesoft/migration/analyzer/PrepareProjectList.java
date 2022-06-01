@@ -2,19 +2,14 @@
 package com.mulesoft.migration.analyzer;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,7 +19,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -33,33 +27,24 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mulesoft.migration.beans.FileMetaDataBean;
 import com.mulesoft.migration.beans.ProjectMetaDataBean;
-import com.orchestrator.Orchestrator;
 import com.orchestrator.PropsUtil;
 
 public class PrepareProjectList {
 
 	public static String parentMule3ProjectPath = "/Users/dsuneja/mule3";
-
 	public static String projectName = "/Users/dsuneja/mule3/jobapplicationapi";
-	
-	private static String[] APP_FOLDER = {"src", "main", "app"};
-	
-	
-	private static String[] MUNIT_FOLDER = {"src","test","munit"};
-	
-	private static String[] MULE_FOLDER = {"src","main","mule"};
-	
-	private static String[] RESOURCES_FOLDER = {"src","main","resources"};
-
+	private static String[] APP_FOLDER = { "src", "main", "app" };
+	private static String[] MUNIT_FOLDER = { "src", "test", "munit" };
+	private static String[] MULE_FOLDER = { "src", "main", "mule" };
+	private static String[] RESOURCES_FOLDER = { "src", "main", "resources" };
 	public static Properties prop = PropsUtil.getProps();
-	
 	private static Logger logger = LogManager.getLogger(PrepareProjectList.class);
 
 	private static String filePathBuilder(String[] pathNames) {
 		String path = String.join(File.separator, pathNames);
 		return path;
 	}
-	
+
 	public static void main(String[] args) {
 		File currentDir = new File(parentMule3ProjectPath);
 
@@ -67,14 +52,14 @@ public class PrepareProjectList {
 
 //	      System.out.println("# of Projects::" +  projectMap.size());
 
-		System.out.println("parentMule3ProjectPath dir---" + projectName);
+		logger.info("parentMule3ProjectPath dir---" + projectName);
 		File dir = new File(projectName);
 
 		ProjectMetaDataBean projectMetaDataBean = new ProjectMetaDataBean();
 
 		try {
 			analyzeProject(dir, projectMetaDataBean);
-			logger.debug("DWL line of code:: "+projectMetaDataBean.getDwlLinesofCode());
+			logger.debug("DWL line of code:: " + projectMetaDataBean.getDwlLinesofCode());
 
 			analyzeSizeOfProject(projectMetaDataBean);
 
@@ -85,30 +70,29 @@ public class PrepareProjectList {
 
 	}
 
-	public static ProjectMetaDataBean analyzeProject(String projectName,ProjectMetaDataBean projectMetaDataBean) {
+	public static ProjectMetaDataBean analyzeProject(String projectName, ProjectMetaDataBean projectMetaDataBean) {
 
 		File currentDir = new File(parentMule3ProjectPath);
 
 //	      Map<String, String> projectMap =  displayDirectoryContents(currentDir);
 
 //	      System.out.println("# of Projects::" +  projectMap.size());
-		
 
-		System.out.println("parentMule3ProjectPath dir---" + projectName);
+		logger.info("parentMule3ProjectPath dir---" + projectName);
 		File dir = new File(projectName);
 
-		//projectMetaDataBean = new ProjectMetaDataBean();
+		// projectMetaDataBean = new ProjectMetaDataBean();
 
 		try {
 			analyzeProject(dir, projectMetaDataBean);
-			System.out.println(projectMetaDataBean.getDwlLinesofCode());
+			logger.info(projectMetaDataBean.getDwlLinesofCode());
 
 			analyzeSizeOfProject(projectMetaDataBean);
-			projectMetaDataBean
-					.setProjectName(dir.getName());
+			projectMetaDataBean.setProjectName(dir.getName());
 
-			//logger.debug(Arrays.asList(projectName.split(File.separator)).get(projectName.split(File.separator).length - 1));
-			//logger.debug(Arrays.asList(projectName.split(File.separator)));
+			// logger.debug(Arrays.asList(projectName.split(File.separator)).get(projectName.split(File.separator).length
+			// - 1));
+			// logger.debug(Arrays.asList(projectName.split(File.separator)));
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -122,8 +106,9 @@ public class PrepareProjectList {
 		long totalNoOfComponents = projectMetaDataBean.getFileMetaDataMap().values().stream()
 				.mapToLong(o -> o.getNumberOfComponents()).sum();
 
-		long totalLinesOfDWLCode = projectMetaDataBean.getFileMetaDataMap().values().stream().mapToLong(o -> o.getDataWeaveCodeLength())
-						.sum()+ projectMetaDataBean.getDwlLinesofCode().values().stream().mapToLong(n -> n).sum();
+		long totalLinesOfDWLCode = projectMetaDataBean.getFileMetaDataMap().values().stream()
+				.mapToLong(o -> o.getDataWeaveCodeLength()).sum()
+				+ projectMetaDataBean.getDwlLinesofCode().values().stream().mapToLong(n -> n).sum();
 
 		long numberOfMunits = projectMetaDataBean.getFileMetaDataMap().values().stream()
 				.filter(o -> o.getFileType().equalsIgnoreCase("test-suite")).mapToLong(o -> o.getNumberOfTests()).sum();
@@ -161,7 +146,7 @@ public class PrepareProjectList {
 			for (File file : files) {
 
 				String fileName = file.getName();
-				System.out.println("directories getting scanned "+ fileName);
+				logger.info("directories getting scanned " + fileName);
 				String canonicalPath = file.getCanonicalPath();
 				String folderSkipList = prop.getProperty("foldersSkipList");
 
@@ -176,14 +161,15 @@ public class PrepareProjectList {
 
 						if (fileName.equalsIgnoreCase("mule-project.xml")) {
 							String muleConfigFile = file.getCanonicalPath();
-							Map<String, String> map = MuleConfigParser.getMuleProjectMetaData(muleConfigFile, projectMetaDataBean);
+							Map<String, String> map = MuleConfigParser.getMuleProjectMetaData(muleConfigFile,
+									projectMetaDataBean);
 							if (map != null) {
 								projectMetaDataBean.setMuleVersion(map.get("runtimeId"));
 
 							}
 // 	            			System.out.println(map);
 
-						} else if(fileName.equalsIgnoreCase("mule-artifact.json")) {
+						} else if (fileName.equalsIgnoreCase("mule-artifact.json")) {
 							Path filepath = Path.of(file.getCanonicalPath());
 							String jsonReport = Files.readString(filepath);
 							JsonElement element = JsonParser.parseString(jsonReport);
@@ -191,7 +177,7 @@ public class PrepareProjectList {
 								JsonObject muleArtifact = element.getAsJsonObject();
 								projectMetaDataBean.setMuleVersion(muleArtifact.get("minMuleVersion").getAsString());
 							}
-						}else if (fileName.endsWith(".xml") && (canonicalPath.contains(filePathBuilder(APP_FOLDER))
+						} else if (fileName.endsWith(".xml") && (canonicalPath.contains(filePathBuilder(APP_FOLDER))
 								|| canonicalPath.contains(filePathBuilder(MULE_FOLDER)))) {
 							logger.debug(fileName + "###### File is a mule configuration file........");
 
@@ -222,16 +208,19 @@ public class PrepareProjectList {
 // 	            		      System.out.println(nList);
 
 							ParseUnknownXMLStructure.visitChildNodes(nList, componentMap, fileName, fileMetaDataBean);
-							System.out.println("component map for file "+ fileName + " :::: "+ componentMap);
+							logger.debug("component map for file " + fileName + " :::: " + componentMap);
 							long items = 0;
-							for(List ls: componentMap.values()) {
-								items=items+ls.size();
+							for (List ls : componentMap.values()) {
+								items = items + ls.size();
+
 							}
 							fileMetaDataBean.setNumberOfComponents(items);
-
+							logger.debug("number of components for file : " + fileName
+									+ " as per the Mule analyzeProject() is " + items);
 							logger.debug("components parsed from Mule 3 file" + componentMap);
 
-							//System.out.println("number of components" + fileMetaDataBean.getNumberOfComponents());
+							// System.out.println("number of components" +
+							// fileMetaDataBean.getNumberOfComponents());
 
 							projectMetaDataBean.getFileMetaDataMap().put(fileName, fileMetaDataBean);
 
@@ -258,7 +247,7 @@ public class PrepareProjectList {
 							Element root = document.getDocumentElement();
 
 							NodeList nList = document.getElementsByTagName("mule");
-							//System.out.println("=============START ANALYZING THE FILE===============");
+							// System.out.println("=============START ANALYZING THE FILE===============");
 
 							componentMap = new HashMap<>();
 
@@ -297,7 +286,6 @@ public class PrepareProjectList {
 
 			// much slower, this task better with sequence access
 			// lines = Files.lines(path).parallel().count();
-
 			lines = Files.lines(path).count();
 
 		} catch (IOException e) {
@@ -324,7 +312,7 @@ public class PrepareProjectList {
 			for (File file : files) {
 				if (file.isDirectory()) {
 					projectMap.put(file.getName(), file.getCanonicalPath());
-					System.out.println("directory:" + file.getCanonicalPath());
+					logger.info("directory:" + file.getCanonicalPath());
 //	               System.out.println(file.getName());
 //	               displayDirectoryContents(file);
 				} else {
