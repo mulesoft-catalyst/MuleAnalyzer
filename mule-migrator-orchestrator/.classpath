@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" output="target/classes" path="src/main/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
@@ -13,79 +14,68 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src/main/resources"/>
-	<classpathentry kind="src" path="src/assembly"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
 		<attributes>
-			<attribute name="module" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="src/assembly"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/api-annotations-1.0.2.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/byte-buddy-1.9.10.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/byte-buddy-agent-1.9.10.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/caffeine-2.6.2.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/checker-qual-3.8.0.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/commons-cli-1.5.0.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/commons-codec-1.11.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/commons-io-2.11.0.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/commons-lang3-3.12.0.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/commons-net-3.8.0.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/commons-text-1.9.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/error_prone_annotations-2.5.1.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/failureaccess-1.0.1.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/fluent-hc-4.5.13.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/freemarker-2.3.31.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/gson-2.8.9.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/guava-30.1.1-jre.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/hamcrest-all-1.3.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/hamcrest-core-1.3.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/httpclient-4.5.13.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/httpcore-4.4.13.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/j2objc-annotations-1.3.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/javax.inject-1.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/jaxen-1.2.0.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/jdom2-2.0.6.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/jsr305-3.0.2.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/junit-4.13.2.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/log4j-api-2.17.0.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/log4j-core-2.17.0.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/log4j-slf4j-impl-2.17.0.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/macro-compat_2.12-1.1.1.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/maven-model-3.5.0.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/migrant-2.1.10.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/mockito-core-2.28.2.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/mule-api-1.1.5.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/mule-artifact-declaration-1.1.2.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/mule-metadata-model-api-1.1.6.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/mule-migration-tool-api-1.2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/mule-migration-tool-contribution-1.2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/mule-migration-tool-engine-1.2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/mule-migration-tool-expression-1.2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/mule-migration-tool-library-1.2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/mule-migration-tool-target-modules-1.2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/objenesis-2.6.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/parboiled_2.12-2.1.4.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/parser-2.1.3.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/plexus-utils-3.0.24.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/scala-library-2.12.9.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/scala-parser-combinators_2.12-1.0.4.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/scala-reflect-2.12.0.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/scala-xml_2.12-1.0.5.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/scalactic_2.12-3.0.1.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/scalatest_2.12-3.0.1.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/semantic-version-1.2.0.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/semver4j-2.2.0.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/shapeless_2.12-2.3.2.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/slf4j-api-1.7.25.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/libs/snakeyaml-1.29.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/mule3/mma-3/mule-migration-assistant-chore-mig-cost/runner/target/mule-migration-assistant-runner-1.2.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/Users/dsuneja/.m2/repository/com/opencsv/opencsv/4.1/opencsv-4.1.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/api-annotations-1.0.2.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/byte-buddy-1.9.10.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/byte-buddy-agent-1.9.10.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/caffeine-2.6.2.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/checker-qual-3.8.0.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/commons-beanutils-1.9.3.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/commons-cli-1.5.0.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/commons-codec-1.11.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/commons-collections-3.2.2.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/commons-io-2.11.0.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/commons-lang3-3.12.0.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/commons-net-3.8.0.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/commons-text-1.9.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/error_prone_annotations-2.5.1.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/failureaccess-1.0.1.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/fluent-hc-4.5.13.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/freemarker-2.3.31.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/gson-2.8.9.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/guava-30.1.1-jre.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/hamcrest-all-1.3.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/httpclient-4.5.13.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/httpcore-4.4.13.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/j2objc-annotations-1.3.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/javax.inject-1.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/jaxen-1.2.0.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/jdom2-2.0.6.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/jsr305-3.0.2.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/log4j-api-2.17.0.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/log4j-core-2.17.0.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/log4j-slf4j-impl-2.17.0.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/macro-compat_2.12-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/maven-model-3.5.0.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/migrant-2.1.10.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/mockito-core-2.28.2.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/mule-api-1.1.5.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/mule-artifact-declaration-1.1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/mule-metadata-model-api-1.1.6.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/mule-migration-assistant-runner-1.2.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/mule-migration-tool-api-1.2.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/mule-migration-tool-contribution-1.2.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/mule-migration-tool-engine-1.2.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/mule-migration-tool-expression-1.2.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/mule-migration-tool-library-1.2.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/mule-migration-tool-target-modules-1.2.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/objenesis-2.6.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/opencsv-4.1.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/parboiled_2.12-2.1.4.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/parser-2.1.3.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/plexus-utils-3.0.24.jar"/>
+	<classpathentry kind="lib" path="/Users/amangla/Documents/AnubhavMangla/M3M4/MuleAnalyzer/libs/scala-library-2.12.9.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

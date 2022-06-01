@@ -23,8 +23,9 @@ import org.xml.sax.SAXException;
 import com.mulesoft.migration.beans.FileMetaDataBean;
 
 public class ParseUnknownXMLStructure {
-	
+
 	private static Logger logger = LogManager.getLogger(ParseUnknownXMLStructure.class);
+
 	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
 		// Get Document Builder
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -45,12 +46,12 @@ public class ParseUnknownXMLStructure {
 
 		// Get all employees
 		NodeList nList = document.getElementsByTagName("mule");
-		//System.out.println("=============START ANALYZING THE FILE===============");
+		// System.out.println("=============START ANALYZING THE FILE===============");
 
 		Map<String, List<String>> componentMap = new HashMap<String, List<String>>();
 		visitChildNodes(nList, componentMap, "Test", new FileMetaDataBean());
 
-		//System.out.println(componentMap);
+		// System.out.println(componentMap);
 	}
 
 	// This function is called recursively
@@ -69,33 +70,37 @@ public class ParseUnknownXMLStructure {
 																									// configuration
 																									// doesn't start
 																									// with mule/flow
+					logger.debug("Adding to component map for node : " + nodeName);
 					addNodeToMap(componentMap, nodeName);
 				}
 
 //            System.out.println("Node Name = " + node.getNodeName() );
 				// Check all attributes
-				if (!(nodeName.equalsIgnoreCase("mule")) && node.hasAttributes()) {
-					// get attributes names and values
-					NamedNodeMap nodeMap = node.getAttributes();
-					for (int i = 0; i < nodeMap.getLength(); i++) {
-						Node tempNode = nodeMap.item(i);
-						String arrtibuteName = tempNode.getNodeName();
-						String arrtibuteValue = tempNode.getNodeValue();
-						if (arrtibuteName.endsWith("name")) {
-//                	   System.out.println("Attributes name : " + arrtibuteName+ "; Value = " + arrtibuteValue);
-						}
 
-					}
-//               System.out.println("################################################");
-
-				}
+				/*
+				 * Commented on 04/27/2022 - Logic not being used if
+				 * (!(nodeName.equalsIgnoreCase("mule")) && node.hasAttributes()) { // get
+				 * attributes names and values NamedNodeMap nodeMap = node.getAttributes(); for
+				 * (int i = 0; i < nodeMap.getLength(); i++) { Node tempNode = nodeMap.item(i);
+				 * String arrtibuteName = tempNode.getNodeName(); String arrtibuteValue =
+				 * tempNode.getNodeValue(); if (arrtibuteName.endsWith("name")) { //
+				 * System.out.println("Attributes name : " + arrtibuteName+ "; Value = " +
+				 * arrtibuteValue); }
+				 * 
+				 * } // System.out.println("################################################");
+				 * 
+				 * }
+				 */
 
 				if (node.hasChildNodes() && !(nodeName.equalsIgnoreCase("flow")
 						|| nodeName.equalsIgnoreCase("choice-exception-strategy"))) {
 					// We got more childs; Let's visit them as well
+					logger.debug("Node :" + node + " is not a flow and has childnodes, nodeName= " + nodeName);
 					visitChildNodes(node.getChildNodes(), componentMap, fileName, fileMetaDataBean);
 				} else {
+					logger.debug("Node :" + node + " is in the else logic, nodeName= " + nodeName);
 					visitFlowNodes(node.getChildNodes(), componentMap, fileMetaDataBean);
+
 				}
 
 			}
@@ -139,7 +144,7 @@ public class ParseUnknownXMLStructure {
 		List<String> list = componentMap.get(nodeName);
 		if (list == null || list.size() == 0) {
 			list = new ArrayList<String>();
-			list.add(nodeName);
+			// list.add(nodeName);
 		}
 		list.add(nodeName);
 		componentMap.put(nodeName, list);

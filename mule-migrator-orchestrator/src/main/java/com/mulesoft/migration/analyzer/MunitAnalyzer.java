@@ -24,6 +24,7 @@ import com.mulesoft.migration.beans.FileMetaDataBean;
 public class MunitAnalyzer {
 
 	private static Logger logger = LogManager.getLogger(MunitAnalyzer.class);
+
 	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
 		// Get Document Builder
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -43,13 +44,13 @@ public class MunitAnalyzer {
 		Element root = document.getDocumentElement();
 
 		NodeList nList = document.getElementsByTagName("mule");
-		//System.out.println("=============START ANALYZING THE FILE===============");
+		// System.out.println("=============START ANALYZING THE FILE===============");
 
 		Map<String, List<String>> componentMap = new HashMap<>();
 
 		visitChildNodes(nList, componentMap, "Test", new FileMetaDataBean());
 
-		//System.out.println(componentMap);
+		// System.out.println(componentMap);
 	}
 
 	public static void visitChildNodes(NodeList nList, Map<String, List<String>> componentMap, String fileName,
