@@ -71,10 +71,12 @@ public class Orchestrator {
         String runningLite = null;
         
         if(args.length > 0 && args.length == 4) {
+        	System.out.println("Started running the Analyzer Full Version");
             PROJECTS_BASE_PATH = args[1];
             DESTINATION_PROJECTS_BASE_PATH = args[3];
             logger.debug("PROJECTS_BASE_PATH :: "+ args[1]);
         }else if(args.length > 0 && args.length == 5){
+        	System.out.println("Started running the Analyzer Lite Version");
             PROJECTS_BASE_PATH = args[1];
             DESTINATION_PROJECTS_BASE_PATH = args[3];
             runningLite = args[4];
@@ -151,7 +153,9 @@ public class Orchestrator {
                 MMAReport mma = new MMAReport();
                 
                 // get mule 4 score
+                System.out.println("Going to get the Mule 4 score for the file: "+file.toFile().getCanonicalPath());
                 mma.parseMMAReport(file.toFile().getCanonicalPath(), metaDataBean);
+                System.out.println("MMA report generation completed for :: "+file.toFile().getCanonicalPath());
                 logger.info("Parsing of MMA generated report completed for :: "+file.toFile().getCanonicalPath());
                 //get project name
                 //get Mule 3 score
@@ -278,6 +282,7 @@ public class Orchestrator {
         
         MMAReport mr = new MMAReport();
         try {
+        	System.out.println("Going to parse the MMA report for :: "+ DESTINATION_PROJECT_BASE_PATH);
             logger.info("Going to parse MMA report for "+ DESTINATION_PROJECT_BASE_PATH);
             mr.parseMMAReport(DESTINATION_PROJECT_BASE_PATH+File.separator + filePathBuilder(reportFiles), metaDataBean);
         }catch(Exception e) {
