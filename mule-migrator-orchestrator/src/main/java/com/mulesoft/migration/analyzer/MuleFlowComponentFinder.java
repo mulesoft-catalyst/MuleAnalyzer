@@ -20,6 +20,7 @@ public class MuleFlowComponentFinder {
 	private static final String FILENAME = "/Users/mvijayvargia/Downloads/Mule3/Mule/acsessftpservice/src/main/app/globalconfig.xml";
 
 	private static Logger logger = LogManager.getLogger(MuleFlowComponentFinder.class);
+
 	public static void main(String[] args) {
 
 		// Instantiate the Factory

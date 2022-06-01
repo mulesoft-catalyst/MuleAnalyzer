@@ -15,7 +15,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class WeightLookup {
-    private static Logger logger = LogManager.getLogger(WeightLookup.class);
+	private static Logger logger = LogManager.getLogger(WeightLookup.class);
 
 	public void lookupWeight(String categoryName, String messageLevel) {
 		Path fileName = Path.of("weightRules.json");

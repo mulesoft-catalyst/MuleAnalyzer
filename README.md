@@ -1,10 +1,12 @@
 # Mule 3 Migration Analyzer Tool
 
-# Instructions for build and deploy
+This project is intended to compile and build itself and MMA project. It provides the following two functionalities:
+  1. ANALYZER FULL VERSION - Read the Mule 3 projects from a directory, run MMA tool and generate estimate for migration effort.
+  2. ANALYZER LITE VERSION - Read the MMA generated report json files, using which estimation for the development effort. 
 
-This project can compile and build itself and MMA project. It provides the following two functionalities:
-  1. Read the Mule 3 projects from a directory, run MMA tool and generate estimate for migration effort.
-  2. Read the MMA generated report json files, using which estimation for the development effort. 
+  The final output is a CSV file with the estimates.
+
+# Instructions for build and deploy
 
 Just run below command to compile and build orchestrator and MMA project
 
@@ -24,16 +26,6 @@ Just run below command to compile and build orchestrator and MMA project
         ... dependency jars
       mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar
     
-    
-
-## How to Run  mule migrator orchestrator
-  
-  - Full Version:
-      java -jar mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar -projectBasePath <Mule3Project path> -destinationProjectBasePath <Mule 4 project path>
-  - Lite Version:
-      java -jar mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar -mule4ReportsSourceBasePath <Mule4 MMA Reports path> -mule4ReportsDestinationBasePath <Mule 4 Final report path> analyzerLite
-  
-  
 ## Key Properties
     Mule 3 Properties
       componentsWeighFactor
@@ -54,7 +46,13 @@ Just run below command to compile and build orchestrator and MMA project
       
       
       
-# Instructions for using the runnable
+
+# How to Run  mule migrator orchestrator
+  
+  
+
+
+# Instructions for using the runnable Mule Analyzer
   
   Excutable zip is available inside zip folder
   
@@ -68,6 +66,14 @@ Just run below command to compile and build orchestrator and MMA project
         ... dependency jars
       mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar
       
+
+ 
+     After navigating to mule-migrator-orchestrator-0.0.1-SNAPSHOT directory. Follow the below 
+    - Full Version:
+      java -jar mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar -projectBasePath <Mule3_project_path> -destinationProjectBasePath <Mule4_project_path>
+    - Lite Version:
+      java -jar mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar -mule4ReportsSourceBasePath <Mule4_MMA_Reports_path> -mule4ReportsDestinationBasePath <Mule4_Final_report_path> analyzerLite
+
 # Post completion of analysis
    -  Verify the file generated named ** estimate.csv ** in the destination path provided in the input parameters.
    -  Use the relavant information for calculation of development and testing effort for each of the required project.

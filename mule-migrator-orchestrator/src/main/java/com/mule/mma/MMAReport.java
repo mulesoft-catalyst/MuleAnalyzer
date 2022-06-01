@@ -28,11 +28,9 @@ public class MMAReport {
 		try {
 			Path fileName = Path.of(reportPath);
 
-			if(!fileName.toFile().isFile()) {
+			if (!fileName.toFile().isFile()) {
 				throw new Exception("Report not generated");
 			}
-
-
 
 			ApplicationMetrics am = metaData.getMule4Metrics();
 			String jsonReport = Files.readString(fileName);
@@ -53,7 +51,7 @@ public class MMAReport {
 				am.setTotalDWLinesPendingMigration(mmaReport.get("numberOfDWTransformationLines").getAsInt()
 						- mmaReport.get("numberOfDWTransformationLinesMigrated").getAsInt());
 
-				//metaData.setProjectName(mmaReport.get("projectName").getAsString());
+				// metaData.setProjectName(mmaReport.get("projectName").getAsString());
 
 				JsonArray messages = mmaReport.get("detailedMessages").getAsJsonArray();
 				List<MessageInfo> infos = new ArrayList<>();
@@ -61,9 +59,10 @@ public class MMAReport {
 				for (int i = 0; i < messages.size(); i++) {
 					Gson gson = new Gson();
 					MessageInfo info = gson.fromJson(messages.get(i), MessageInfo.class);
-					if (!info.getLevel().equalsIgnoreCase("INFO") && !infos.contains(info) ) {
+					if (!info.getLevel().equalsIgnoreCase("INFO") && !infos.contains(info)) {
 						infos.add(info);
-						logger.debug("Parsed detailedMessages Array --> " + info.getKey() + " " +info.getLevel() + " for : " +info.getComponent());
+						logger.debug("Parsed detailedMessages Array --> " + info.getKey() + " " + info.getLevel()
+								+ " for : " + info.getComponent());
 					}
 
 				}
@@ -71,21 +70,23 @@ public class MMAReport {
 				double tempScore = 0.0;
 
 				for (MessageInfo info : infos) {
-					if(prop.getProperty(info.getId()) == null) {
-						String tempKey = findByProperty( info);
+					if (prop.getProperty(info.getId()) == null) {
+						String tempKey = findByProperty(info);
 						tempScore = Double.parseDouble(prop.getProperty(tempKey));
-						
-					}else {
-						 tempScore = Double.parseDouble(prop.getProperty(info.getId()));
+
+					} else {
+						tempScore = Double.parseDouble(prop.getProperty(info.getId()));
 					}
-					logger.debug("Components to be given default score from props, ComponentName : " + info.getId() + " :: Calculated value from properties : " + prop.getProperty(info.getId()));
+					logger.debug("Components to be given default score from props, ComponentName : " + info.getId()
+							+ " :: Calculated value from properties : " + prop.getProperty(info.getId()));
 					score = score + tempScore;
 				}
-				/*only if component look up doesn't give any results*/
-				if(infos.isEmpty()) {
+				/* only if component look up doesn't give any results */
+				if (infos.isEmpty()) {
 					logger.debug("Setting score on the basis of property");
-					score = am.getTotalComponentsPendingMigration()* (prop.getProperty("mule4.componentsWeight") == null ? 1
-							: Double.parseDouble(prop.getProperty("mule4.componentsWeight")));
+					score = am.getTotalComponentsPendingMigration()
+							* (prop.getProperty("mule4.componentsWeight") == null ? 1
+									: Double.parseDouble(prop.getProperty("mule4.componentsWeight")));
 				}
 
 				logger.info("Final score from MMA json file --> " + score);
@@ -96,15 +97,13 @@ public class MMAReport {
 				am.setScoreOfMELLineExpressions(am.getTotalMELLineExpressionsPendingMigration()
 						* (prop.getProperty("mule4.MELLineExpressionWeigh") == null ? 1
 								: Double.parseDouble(prop.getProperty("mule4.MELLineExpressionWeigh"))));
-				
-				am.setScoreOfDWLLines(am.getTotalDWLinesPendingMigration()
-						*(prop.getProperty("mule4.NumberOfDWLTransformationLines") == null ? 1
-						: Double.parseDouble(prop.getProperty("mule4.NumberOfDWLTransformationLines"))));
 
-				am.setMule4Score(am.getScoreOfComponents() +
-									am.getScoreOfMELExpressions() +
-									am.getScoreOfMELLineExpressions()+
-									am.getScoreOfDWLLines());
+				am.setScoreOfDWLLines(am.getTotalDWLinesPendingMigration()
+						* (prop.getProperty("mule4.NumberOfDWLTransformationLines") == null ? 1
+								: Double.parseDouble(prop.getProperty("mule4.NumberOfDWLTransformationLines"))));
+
+				am.setMule4Score(am.getScoreOfComponents() + am.getScoreOfMELExpressions()
+						+ am.getScoreOfMELLineExpressions() + am.getScoreOfDWLLines());
 
 				metaData.setMule4Metrics(am);
 			}
@@ -113,13 +112,12 @@ public class MMAReport {
 		}
 
 	}
-	
-	
+
 	public void parseMMAReportForMule3Score(String reportPath, ProjectMetaDataBean metaData) {
 		try {
 			Path fileName = Path.of(reportPath);
 
-			if(!fileName.toFile().isFile()) {
+			if (!fileName.toFile().isFile()) {
 				throw new Exception("Report not generated");
 			}
 
@@ -130,11 +128,14 @@ public class MMAReport {
 			if (element.isJsonObject()) {
 				JsonObject mmaReport = element.getAsJsonObject();
 				metaData.setProjectName(mmaReport.get("projectName").getAsString());
-				double score = am.getTotalComponents()*Double.parseDouble(prop.getProperty("mule3.componentsWeightFactor"))
-							+ am.getTotalMELLineExpressions()* Double.parseDouble(prop.getProperty("mule3.dwlLinesOfCodeWeightFactor"))
-							+ am.getTotalDWLines()* Double.parseDouble(prop.getProperty("mule3.dwlLinesOfCodeWeightFactor"));
+				double score = am.getTotalComponents()
+						* Double.parseDouble(prop.getProperty("mule3.componentsWeightFactor"))
+						+ am.getTotalMELLineExpressions()
+								* Double.parseDouble(prop.getProperty("mule3.dwlLinesOfCodeWeightFactor"))
+						+ am.getTotalDWLines()
+								* Double.parseDouble(prop.getProperty("mule3.dwlLinesOfCodeWeightFactor"));
 				metaData.setScore(score);
-				
+
 			}
 		} catch (Exception e) {
 
@@ -142,15 +143,15 @@ public class MMAReport {
 	}
 
 	private String findByProperty(MessageInfo obj) {
-		
-		if(null != obj && null != obj.getKey() && obj.getKey().equalsIgnoreCase("components.unsupported")) {
-			//System.out.println("Unsupported missing key is" + obj.getId() );
-			logger.info("Unsupported missing key is" + obj.getId() );
+
+		if (null != obj && null != obj.getKey() && obj.getKey().equalsIgnoreCase("components.unsupported")) {
+			// System.out.println("Unsupported missing key is" + obj.getId() );
+			logger.info("Unsupported missing key is" + obj.getId());
 			return "mule4.unsupportedComponentNotFoundWeight";
 		}
-			
-		//System.out.println("Supported missing key is" + obj.getId()  );
-		logger.info("Supported missing key is" + obj.getId() );
+
+		// System.out.println("Supported missing key is" + obj.getId() );
+		logger.info("Supported missing key is" + obj.getId());
 		return "mule4.supportComponentNotFoundWeight";
 	}
 
