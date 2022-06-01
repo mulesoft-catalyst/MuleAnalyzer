@@ -47,16 +47,11 @@ Just run below command to compile and build orchestrator and MMA project
       
       
 
-# How to Run  mule migrator orchestrator
-  
-  
-
-
-# Instructions for using the runnable Mule Analyzer
+# Instructions for using the runnable Mule Analyzer after build
   
   Excutable zip is available inside zip folder
   
-  Unzip mule-migrator-orchestrator-0.0.1-SNAPSHOT.zip in target directory
+  ###### Unzip mule-migrator-orchestrator-0.0.1-SNAPSHOT.zip in target directory
   
   Change directory mule-migrator-orchestrator-0.0.1-SNAPSHOT 
   ## Directory structure in mule-migrator-orchestrator-0.0.1-SNAPSHOT will be like 
@@ -67,8 +62,9 @@ Just run below command to compile and build orchestrator and MMA project
       mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar
       
 
+  ###### After navigating to mule-migrator-orchestrator-0.0.1-SNAPSHOT directory. Follow the below steps
  
-     After navigating to mule-migrator-orchestrator-0.0.1-SNAPSHOT directory. Follow the below 
+     
     - Full Version:
       java -jar mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar -projectBasePath <Mule3_project_path> -destinationProjectBasePath <Mule4_project_path>
     - Lite Version:
