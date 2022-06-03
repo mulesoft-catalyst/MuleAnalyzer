@@ -11,6 +11,19 @@
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+  - [Prerequisites](#Prerequisites)
+  - [Usage](#Usage)
+    - [Steps to execute the runnable](#Steps_to_execute_the_runnable)
+    - [Directory structure in *MuleAnalyzer* folder](#Directory_structure_in_MuleAnalyzer)
+    - [Running the **Analyzer Lite** version](#Running_the_Analyzer_Lite_version)
+    - [Running the **Analyzer Full** version](#Running_the_Analyzer_Full_version)
+  - [Steps for build and deploy the Analyzer tool](#Steps_for_build_and_deploy_the_Analyzer_tool)
+    - [Directory structure in *MuleAnalyzer* folder](#Directory_structure_in_MuleAnalyzer)
+    - [Key Properties](#Key_Properties)
+  - [Post completion of analysis](#Post_completion_of_analysis)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # Prerequisites
   1. Understand the functionality and steps to achieve the end result.
   2. Access to Customer's Mule 3 Source code repository.
@@ -24,7 +37,7 @@ This tool is intended to compile and build itself and MMA project. It provides t
   2. *ANALYZER LITE VERSION* - Read the MMA generated report json files, using which estimation for the development effort. 
 
   The final output of this tool generated the following:
-    1. **CSV file:** This file contains the metadata that is needed as input for the Mule Application Migration Effort Estimator Tool. Contact the concerned person for access to Estimator Tool.
+    1. **CSV file:** This file contains the metadata that is needed as input for the Mule Application Migration Effort Estimator Tool. Contact the concerned team for access to Estimator Tool.
     2. **Migrated Mule 4 Source Code:** The Analyzer Tool internally calls the Mule Migration Assistant Tool which migrates the Mule 3 API to a Mule 4 API and provides a report (in HTML and JSON formats). This migrated Mule 4 API is ready to be imported in Anypoint Studio by the developer and begin fixing the reported errors/warnings during the Implementation phase of the project.
 
 
@@ -41,7 +54,7 @@ This tool is intended to compile and build itself and MMA project. It provides t
         ... dependency jars
       mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar
 
-  - Running the **Analyzer Lite** version.
+  - Running the **Analyzer Lite** version
     * *Lite Version:*
     
       `java -jar mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar -mule4ReportsSourceBasePath <Mule4_MMA_Reports_path> -mule4ReportsDestinationBasePath <Mule4_Final_report_path> analyzerLite`
@@ -53,7 +66,7 @@ This tool is intended to compile and build itself and MMA project. It provides t
 
       `e.g.: java -jar mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar -mule4ReportsSourceBasePath /Users/AnubhavMangla/MuleAnalyzer/Mule4Reports -mule4ReportsDestinationBasePath /Users/AnubhavMangla/MuleAnalyzer/MigratedMule4Estimate analyzerLite`
 
-
+  - Running the **Analyzer Full** version
     * *Full Version:*
     
       `java -jar mule-migrator-orchestrator-0.0.1-SNAPSHOT.jar -projectBasePath <Mule3_project_path> -destinationProjectBasePath <Mule4_project_path>`
@@ -111,5 +124,5 @@ This tool is intended to compile and build itself and MMA project. It provides t
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Post completion of analysis
-  -  Verify the file generated named ** estimate.csv ** in the destination path provided in the input parameters.
-  -  Use the relavant information for calculation of development and testing effort for each of the required project.
+  -  Verify the file generated named **estimate.csv** in the destination path provided in the input parameters.
+  -  Use the relavant information for calculation of development and testing effort for each of the required project(Contact the concerned person for access to Estimator Tool).
