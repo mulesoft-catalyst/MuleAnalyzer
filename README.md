@@ -13,8 +13,8 @@
 
   - [Prerequisites](#Prerequisites)
   - [Usage](#Usage)
-  - [Steps for build and deploy the Analyzer tool](#Steps for build and deploy the Analyzer tool)
-  - [Post completion of analysis](#Post completion of analysis)
+  - [Steps for build and deploy the Analyzer tool](#Steps_for_build_and_deploy_the_Analyzer_tool)
+  - [Post completion of analysis](#Post_completion_of_analysis)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
