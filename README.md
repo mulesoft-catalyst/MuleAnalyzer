@@ -13,14 +13,8 @@
 
   - [Prerequisites](#Prerequisites)
   - [Usage](#Usage)
-    - [Steps to execute the runnable](#Steps_to_execute_the_runnable)
-    - [Directory structure in *MuleAnalyzer* folder](#Directory_structure_in_MuleAnalyzer)
-    - [Running the **Analyzer Lite** version](#Running_the_Analyzer_Lite_version)
-    - [Running the **Analyzer Full** version](#Running_the_Analyzer_Full_version)
-  - [Steps for build and deploy the Analyzer tool](#Steps_for_build_and_deploy_the_Analyzer_tool)
-    - [Directory structure in *MuleAnalyzer* folder](#Directory_structure_in_MuleAnalyzer)
-    - [Key Properties](#Key_Properties)
-  - [Post completion of analysis](#Post_completion_of_analysis)
+  - [Steps for build and deploy the Analyzer tool](#Steps for build and deploy the Analyzer tool)
+  - [Post completion of analysis](#Post completion of analysis)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
