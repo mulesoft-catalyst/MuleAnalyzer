@@ -12,14 +12,14 @@ public class ApplicationMetrics {
 	private int totalMUnitsPendingMigration;
 	private int totalMELExpressions;
 	private int totalMELExpressionsPendingMigration;
-	
+
 	private int totalMELLineExpressions;
 	private int totalMELLineExpressionsPendingMigration;
 	private int totalDWLines;
 	private int totalDWLinesPendingMigration;
 	private int totalWarnings;
 	private int totalErrors;
-	
+
 	private double scoreOfDWLLines;
 
 	private double scoreOfComponents;
@@ -288,7 +288,5 @@ public class ApplicationMetrics {
 	public void setTotalMELLineExpressionsPendingMigration(int totalMELLineExpressionsPendingMigration) {
 		this.totalMELLineExpressionsPendingMigration = totalMELLineExpressionsPendingMigration;
 	}
-	
-	
 
 }

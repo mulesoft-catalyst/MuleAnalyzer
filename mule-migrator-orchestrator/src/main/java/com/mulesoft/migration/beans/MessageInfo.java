@@ -32,8 +32,6 @@ public class MessageInfo {
 		this.component = component;
 	}
 
-	
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -67,7 +65,7 @@ public class MessageInfo {
 
 	public String getId() {
 		String comp = component.replace(":", ".");
-		return comp+"."+level;
+		return comp + "." + level;
 	}
 
 }

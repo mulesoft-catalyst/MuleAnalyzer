@@ -18,28 +18,29 @@ public class CSVUtil {
 			CSVWriter writer = new CSVWriter(new FileWriter(csvFile, true));
 			List<String[]> data = new ArrayList<String[]>();
 			String[] ar = new String[9];
-			ar[0]= metaData.getProjectName();
-			ar[1]= "";
+			ar[0] = metaData.getProjectName();
+			ar[1] = "";
 			ar[3] = "";
 			ar[4] = "";
-			ar[5] ="";
-			ar[6]="A. As-Is";
-			String muleVersion = metaData.getMuleVersion().contains("server.3")? "Mule 3": "Mule 4";
+			ar[5] = "";
+			ar[6] = "A. As-Is";
+			String muleVersion = metaData.getMuleVersion().contains("server.3") ? "Mule 3" : "Mule 4";
 			ar[2] = muleVersion;
-			if(!errorRecord) {
+			if (!errorRecord) {
 				ar[7] = String.valueOf(Math.round(metaData.getScore()));
 				ar[8] = String.valueOf(Math.round(metaData.getMule4Metrics().getMule4Score()));
-			}else {
+			} else {
 				ar[7] = "0";
 				ar[8] = "0";
 			}
-			
-			writer.writeNext(ar);;
+
+			writer.writeNext(ar);
+			;
 			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 }
